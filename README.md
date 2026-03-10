@@ -26,6 +26,18 @@
   <a href="https://github.com/LarryHu1988/PDFLibrarian/releases">Download</a>
 </p>
 
+<p align="center">
+  <a href="https://github.com/LarryHu1988/PDFLibrarian/releases/download/V1.0.0/PDFLibrarian-1.0.0.dmg">
+    <img src="https://img.shields.io/badge/Download-DMG-2563eb?style=for-the-badge&logo=apple&logoColor=white" alt="Download DMG">
+  </a>
+  <a href="https://github.com/LarryHu1988/PDFLibrarian/releases/download/V1.0.0/PDFLibrarian-1.0.0.zip">
+    <img src="https://img.shields.io/badge/Download-ZIP-0f766e?style=for-the-badge" alt="Download ZIP">
+  </a>
+  <a href="https://github.com/LarryHu1988/PDFLibrarian/releases/tag/V1.0.0">
+    <img src="https://img.shields.io/badge/View-Release%20Notes-7c3aed?style=for-the-badge&logo=github&logoColor=white" alt="View Release Notes">
+  </a>
+</p>
+
 <table>
   <tr>
     <td width="25%" align="center">
