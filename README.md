@@ -19,12 +19,18 @@
 </p>
 
 <p align="center">
-  <a href="#-中文">中文</a> •
-  <a href="#-english">English</a> •
+  <a href="#overview">Overview</a> •
+  <a href="#screenshots">Screenshots</a> •
+  <a href="#faq">FAQ</a> •
+  <a href="#中文">中文</a> •
   <a href="https://github.com/LarryHu1988/PDFLibrarian/releases">Download</a>
 </p>
 
-## ✨ Highlights
+## Overview
+
+PDF Librarian helps organize book and paper PDFs on macOS with a clear four-step workflow: select files, search metadata, confirm editable Dublin Core fields, and rename files using the latest written metadata.
+
+## Highlights
 
 - 🔎 Search metadata from filename hints and extracted PDF content
 - 🌐 Merge results from `Google Books`, `Open Library`, `Douban`, and `Library of Congress`
@@ -36,7 +42,9 @@
 - 🌗 Support `Daylight / Moonlight` appearance modes
 - 🌍 Support a multi-language UI
 
-## 🖼️ Interface
+## Screenshots
+
+### English UI
 
 <table>
   <tr>
@@ -44,12 +52,25 @@
     <td align="center"><strong>Moonlight</strong></td>
   </tr>
   <tr>
-    <td><img src="docs/assets/pdflibrarian-daylight-full.png" alt="PDF Librarian in Daylight mode"></td>
-    <td><img src="docs/assets/pdflibrarian-moonlight-full.png" alt="PDF Librarian in Moonlight mode"></td>
+    <td><img src="docs/assets/pdflibrarian-en-light-full.png" alt="PDF Librarian English Daylight UI"></td>
+    <td><img src="docs/assets/pdflibrarian-en-dark-full.png" alt="PDF Librarian English Moonlight UI"></td>
   </tr>
 </table>
 
-## 📊 Feature Matrix
+### Chinese UI
+
+<table>
+  <tr>
+    <td align="center"><strong>Daylight</strong></td>
+    <td align="center"><strong>Moonlight</strong></td>
+  </tr>
+  <tr>
+    <td><img src="docs/assets/pdflibrarian-zh-Hans-light-full.png" alt="PDF Librarian Chinese Daylight UI"></td>
+    <td><img src="docs/assets/pdflibrarian-zh-Hans-dark-full.png" alt="PDF Librarian Chinese Moonlight UI"></td>
+  </tr>
+</table>
+
+## Feature Matrix
 
 | Feature | Support | Notes |
 | --- | --- | --- |
@@ -62,46 +83,41 @@
 | Daylight / Moonlight themes | ✅ | Designed for both bright and dark desktop setups |
 | Chinese / English UI | ✅ | Suitable for local and global workflows |
 
-## ❓ FAQ
+## FAQ
 
-**Does the app upload PDFs? / 会上传 PDF 文件吗？**  
-No. The app reads PDFs you explicitly select on your Mac and sends metadata hints such as title, author, ISBN, or DOI to public metadata sources when needed. It does not upload the full PDF file.  
-不会。应用只处理你在本机明确选中的 PDF，并在需要时把标题、作者、ISBN、DOI 这类检索线索发给公开元数据源，不会上传整份 PDF 文件。
+**Does the app upload PDFs?**  
+No. The app reads PDFs you explicitly select on your Mac and sends metadata hints such as title, author, ISBN, or DOI to public metadata sources when needed. It does not upload the full PDF file.
 
-**Can I edit metadata before writing? / 写入前可以手动改字段吗？**  
-Yes. Step 3 is an editable review step, and the app writes exactly the values you confirm there.  
-可以。第 3 步就是可编辑确认页，写入时会严格使用你确认后的字段值。
+**Can I edit metadata before writing?**  
+Yes. Step 3 is an editable review step, and the app writes exactly the values you confirm there.
 
-**Does rename use the latest written metadata? / 重命名会基于最新写入的元数据吗？**  
-Yes. Rename suggestions are generated from the latest metadata written into the PDF, not from stale candidate values.  
-会。第 4 步建议文件名基于刚写入 PDF 的最新元数据生成，不会回退到旧候选值。
+**Does rename use the latest written metadata?**  
+Yes. Rename suggestions are generated from the latest metadata written into the PDF, not from stale candidate values.
 
-**Can I change the final file name manually? / 最终文件名还能手动改吗？**  
-Yes. Step 4 allows manual edits before the rename is applied.  
-可以。第 4 步仍然允许手动修改最终文件名，然后再执行重命名。
+**Can I change the final file name manually?**  
+Yes. Step 4 allows manual edits before the rename is applied.
 
-**What kind of PDFs is this app for? / 这个应用适合什么 PDF？**  
-It is designed for book PDFs, academic papers, and reference documents that benefit from cleaner metadata and library-friendly file names.  
-它主要适合书籍 PDF、学术论文和参考资料这类需要整理元数据与文件名的文档。
+**What kind of PDFs is this app for?**  
+It is designed for book PDFs, academic papers, and reference documents that benefit from cleaner metadata and library-friendly file names.
 
-## 🚀 Download
+## Download
 
 - [Latest Release](https://github.com/LarryHu1988/PDFLibrarian/releases)
 - Current official version: `V1.0.0`
 - Release assets: `PDFLibrarian-1.0.0.dmg` and `PDFLibrarian-1.0.0.zip`
 
-## 🧭 Workflow
+## Workflow
 
 1. Select a PDF file or folder
 2. Search and merge metadata candidates
 3. Review, edit, and confirm Dublin Core values
 4. Confirm or edit the final file name and rename the PDF
 
-## 🏷️ Default Dublin Core Fields
+## Default Dublin Core Fields
 
 `dc:title`, `dc:creator`, `dc:publisher`, `dc:date`, `dc:language`, `dc:type`, `dc:format`, `dc:identifier`, `dc:subject`
 
-## 🛠️ Build From Source
+## Build From Source
 
 ```bash
 swift build
@@ -111,28 +127,68 @@ swift build
 
 Build artifacts are generated in `dist/`.
 
-## 📄 License
+## License
 
-This repository is distributed under a proprietary, all-rights-reserved license.
-See [`LICENSE`](LICENSE).
+This repository is distributed under a proprietary, all-rights-reserved license. See [`LICENSE`](LICENSE).
 
-## 🇨🇳 中文
+## 中文
 
 ### 产品简介
 
-PDF Librarian 是一款面向 macOS 的 PDF 元数据整理工具，适合书籍、论文和参考资料归档。
+PDF Librarian 是一款面向 macOS 的 PDF 元数据整理工具，围绕四步流程展开：选择文件、联网检索、确认可编辑的 Dublin Core 字段、再按最新写入的元数据重命名。
 
 ### 功能亮点
 
 - 🔎 根据文件名和 PDF 内容提示检索元数据
 - 🌐 聚合 `Google Books`、`Open Library`、`豆瓣网页搜索`、`Library of Congress`
-- 🧩 按 `ISBN -> DOI -> 标题+作者` 去重并合并候选
+- 🧩 按 `ISBN -> DOI -> 标题 + 作者` 去重并合并候选
 - 🏷️ 写入前可手动编辑 Dublin Core 字段
 - ✅ 按确认后的字段值写回 PDF 元数据
 - 📝 基于最新写入的元数据生成建议文件名
 - ✍️ 重命名时允许再次手动修改最终文件名
 - 🌗 支持 `日光 / 月光` 外观
-- 🌍 支持多语言界面
+- 🌍 支持中英文界面
+
+### 截图
+
+- 英文界面截图：见上方 `English UI`
+- 中文界面截图：见上方 `Chinese UI`
+
+### 功能对比表
+
+| 功能 | 支持情况 | 说明 |
+| --- | --- | --- |
+| 多源元数据检索 | ✅ | 支持 `Google Books`、`Open Library`、`Douban`、`Library of Congress` |
+| 候选去重与合并 | ✅ | 优先级为 `ISBN -> DOI -> 标题 + 作者` |
+| Dublin Core 字段可编辑 | ✅ | 写入前可逐项确认和修正 |
+| 按确认值写入元数据 | ✅ | 第 3 步确认后的值会被直接写入 PDF |
+| 基于最新元数据重命名 | ✅ | 第 4 步建议文件名来自最新写入结果 |
+| 最终文件名可手动修改 | ✅ | 执行重命名前仍可再次编辑 |
+| 日光 / 月光主题 | ✅ | 同时适配亮色和暗色桌面 |
+| 中英文界面 | ✅ | 适合本地和国际化使用 |
+
+### 常见问题
+
+**会上传 PDF 文件吗？**  
+不会。应用只处理你在本机明确选中的 PDF，并在需要时把标题、作者、ISBN、DOI 这类检索线索发给公开元数据源，不会上传整份 PDF 文件。
+
+**写入前可以手动修改字段吗？**  
+可以。第 3 步就是可编辑确认页，写入时会严格使用你确认后的字段值。
+
+**重命名会基于最新写入的元数据吗？**  
+会。第 4 步建议文件名基于刚写入 PDF 的最新元数据生成，不会回退到旧候选值。
+
+**最终文件名还能手动改吗？**  
+可以。第 4 步仍然允许手动修改最终文件名，然后再执行重命名。
+
+**这个应用适合什么 PDF？**  
+它主要适合书籍 PDF、学术论文和参考资料这类需要整理元数据与文件名的文档。
+
+### 下载
+
+- [最新版本](https://github.com/LarryHu1988/PDFLibrarian/releases)
+- 当前正式版本：`V1.0.0`
+- 发布产物：`PDFLibrarian-1.0.0.dmg` 和 `PDFLibrarian-1.0.0.zip`
 
 ### 使用流程
 
@@ -155,31 +211,6 @@ swift build
 
 构建产物位于 `dist/`。
 
-## 🇺🇸 English
+### 许可证
 
-### Overview
-
-PDF Librarian is a macOS desktop app for cleaning up and standardizing metadata in book and academic paper PDFs.
-
-### Key Features
-
-- 🔎 Metadata lookup from filename and extracted PDF hints
-- 🌐 Multi-source search across `Google Books`, `Open Library`, `Douban`, and `Library of Congress`
-- 🧩 Deduplication and merge flow using `ISBN -> DOI -> title + author`
-- 🏷️ Editable Dublin Core values before writing
-- ✅ Metadata writing uses the final confirmed field values
-- 📝 Rename suggestions are generated from the latest written metadata
-- ✍️ Users can edit the final file name before rename
-- 🌗 `Daylight / Moonlight` appearance modes
-- 🌍 Multi-language UI
-
-### Workflow
-
-1. Select a PDF file or folder
-2. Search and merge metadata candidates
-3. Review, edit, and confirm Dublin Core values
-4. Confirm or edit the final file name and rename the PDF
-
-### Default Fields
-
-`dc:title`, `dc:creator`, `dc:publisher`, `dc:date`, `dc:language`, `dc:type`, `dc:format`, `dc:identifier`, `dc:subject`
+本仓库采用专有、保留所有权利的授权方式。详见 [`LICENSE`](LICENSE)。
