@@ -19,17 +19,58 @@
 </p>
 
 <p align="center">
-  <a href="#-overview">Overview</a> •
-  <a href="#-screenshots">Screenshots</a> •
-  <a href="#-faq">FAQ</a> •
-  <a href="#-中文">中文</a> •
+  <a href="#overview">Overview</a> •
+  <a href="#screenshots">Screenshots</a> •
+  <a href="#faq">FAQ</a> •
+  <a href="#chinese">中文</a> •
   <a href="https://github.com/LarryHu1988/PDFLibrarian/releases">Download</a>
 </p>
 
+<table>
+  <tr>
+    <td width="25%" align="center">
+      <a href="#highlights"><strong>✨ Features</strong></a><br>
+      Lookup, merge, write, rename
+    </td>
+    <td width="25%" align="center">
+      <a href="#screenshots"><strong>🖼️ Screenshots</strong></a><br>
+      English and Chinese UI
+    </td>
+    <td width="25%" align="center">
+      <a href="#download"><strong>⬇️ Download</strong></a><br>
+      DMG and ZIP assets
+    </td>
+    <td width="25%" align="center">
+      <a href="#license"><strong>📄 License</strong></a><br>
+      Proprietary release terms
+    </td>
+  </tr>
+  <tr>
+    <td width="25%" align="center">
+      <a href="#faq"><strong>❓ FAQ</strong></a><br>
+      Common workflow answers
+    </td>
+    <td width="25%" align="center">
+      <a href="#workflow"><strong>🧭 Workflow</strong></a><br>
+      4-step metadata flow
+    </td>
+    <td width="25%" align="center">
+      <a href="#fields"><strong>🏷️ Fields</strong></a><br>
+      Default Dublin Core set
+    </td>
+    <td width="25%" align="center">
+      <a href="#chinese"><strong>🇨🇳 中文</strong></a><br>
+      Chinese overview and FAQ
+    </td>
+  </tr>
+</table>
+
+<a id="overview"></a>
 ## ✨ Overview
 
 PDF Librarian helps organize book and paper PDFs on macOS with a clear four-step workflow: select files, search metadata, confirm editable Dublin Core fields, and rename files using the latest written metadata.
 
+<a id="highlights"></a>
 ## 🚀 Highlights
 
 - 🔎 Search metadata from filename hints and extracted PDF content
@@ -42,6 +83,7 @@ PDF Librarian helps organize book and paper PDFs on macOS with a clear four-step
 - 🌗 Support `Daylight / Moonlight` appearance modes
 - 🌍 Support a multi-language UI
 
+<a id="screenshots"></a>
 ## 🖼️ Screenshots
 
 ### 🇺🇸 English UI
@@ -83,6 +125,7 @@ PDF Librarian helps organize book and paper PDFs on macOS with a clear four-step
 | Daylight / Moonlight themes | ✅ | Designed for both bright and dark desktop setups |
 | Chinese / English UI | ✅ | Suitable for local and global workflows |
 
+<a id="faq"></a>
 ## ❓ FAQ
 
 1. **Does the app upload PDFs?**  
@@ -100,12 +143,14 @@ PDF Librarian helps organize book and paper PDFs on macOS with a clear four-step
 5. **What kind of PDFs is this app for?**  
    It is designed for book PDFs, academic papers, and reference documents that benefit from cleaner metadata and library-friendly file names.
 
+<a id="download"></a>
 ## ⬇️ Download
 
 - [Latest Release](https://github.com/LarryHu1988/PDFLibrarian/releases)
 - Current official version: `V1.0.0`
 - Release assets: `PDFLibrarian-1.0.0.dmg` and `PDFLibrarian-1.0.0.zip`
 
+<a id="workflow"></a>
 ## 🧭 Workflow
 
 1. Select a PDF file or folder
@@ -113,6 +158,7 @@ PDF Librarian helps organize book and paper PDFs on macOS with a clear four-step
 3. Review, edit, and confirm Dublin Core values
 4. Confirm or edit the final file name and rename the PDF
 
+<a id="fields"></a>
 ## 🏷️ Default Dublin Core Fields
 
 `dc:title`, `dc:creator`, `dc:publisher`, `dc:date`, `dc:language`, `dc:type`, `dc:format`, `dc:identifier`, `dc:subject`
@@ -127,10 +173,12 @@ swift build
 
 Build artifacts are generated in `dist/`.
 
+<a id="license"></a>
 ## 📄 License
 
 This repository is distributed under a proprietary, all-rights-reserved license. See [`LICENSE`](LICENSE).
 
+<a id="chinese"></a>
 ## 🇨🇳 中文
 
 ### 🧾 产品简介
