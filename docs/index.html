@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDF Librarian</title>
+  <style>
+    :root { color-scheme: light; --bg:#eef3f9; --card:#ffffff; --text:#1f2a37; --sub:#5d6b7d; --accent:#2f6fe4; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Hiragino Sans GB",sans-serif; background:linear-gradient(180deg,#eef3f9,#dfe8f3); color:var(--text); }
+    .wrap { max-width:960px; margin:0 auto; padding:64px 24px 80px; }
+    .hero { background:rgba(255,255,255,.78); backdrop-filter:blur(14px); border:1px solid rgba(49,77,118,.10); border-radius:28px; padding:32px; box-shadow:0 20px 60px rgba(27,54,92,.10); }
+    h1 { margin:0 0 12px; font-size:48px; }
+    p { line-height:1.7; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; margin-top:24px; }
+    .card { display:block; text-decoration:none; color:inherit; background:rgba(255,255,255,.82); border-radius:22px; padding:22px; border:1px solid rgba(49,77,118,.10); box-shadow:0 12px 36px rgba(27,54,92,.08); }
+    .card h2 { margin:0 0 8px; font-size:22px; }
+    .small { color:var(--sub); }
+    .btns { display:flex; gap:12px; flex-wrap:wrap; margin-top:20px; }
+    .btn { display:inline-block; text-decoration:none; color:#fff; background:var(--accent); padding:12px 18px; border-radius:999px; font-weight:600; }
+    .ghost { background:#fff; color:var(--accent); border:1px solid rgba(47,111,228,.24); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>PDF Librarian</h1>
+      <p>A macOS app for cleaning up, standardizing, and renaming book and academic paper PDFs.</p>
+      <div class="btns">
+        <a class="btn" href="https://github.com/LarryHu1988/PDFLibrarian/releases/tag/V1.0.0">Latest Release</a>
+        <a class="btn ghost" href="./privacy-policy/">Privacy Policy</a>
+        <a class="btn ghost" href="./support/">Support</a>
+      </div>
+    </section>
+    <div class="grid">
+      <a class="card" href="./privacy-policy/">
+        <h2>Privacy Policy</h2>
+        <p class="small">Public page for the App Store privacy policy URL.</p>
+      </a>
+      <a class="card" href="./support/">
+        <h2>Support</h2>
+        <p class="small">Public support page for App Store listing and review.</p>
+      </a>
+      <a class="card" href="https://github.com/LarryHu1988/PDFLibrarian/releases/tag/V1.0.0">
+        <h2>Release Notes</h2>
+        <p class="small">Current V1.0.0 release details and downloadable assets.</p>
+      </a>
+      <a class="card" href="https://github.com/LarryHu1988/PDFLibrarian/issues">
+        <h2>Issue Tracker</h2>
+        <p class="small">Support requests and bug reports via GitHub Issues.</p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
