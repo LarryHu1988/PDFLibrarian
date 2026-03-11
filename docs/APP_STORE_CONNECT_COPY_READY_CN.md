@@ -4,16 +4,17 @@
 
 ## 一、你现在可以直接填写的网址
 
-如果 GitHub Pages 启用成功，填写下面这两个：
+现在可以直接填写下面这两个：
 
-- 隐私政策网址：`https://larryhu1988.github.io/PDFLibrarian/privacy-policy/`
-- 支持网址：`https://larryhu1988.github.io/PDFLibrarian/support/`
+- 隐私政策网址：`https://larryhu.com/PDFLibrarian/privacy-policy/`
+- 支持网址：`https://larryhu.com/PDFLibrarian/support/`
 
 其他可用网址：
 
 - Release Notes：`https://github.com/LarryHu1988/PDFLibrarian/releases/tag/V1.0.0`
 - Issues 支持入口：`https://github.com/LarryHu1988/PDFLibrarian/issues`
 - 下载页：`https://github.com/LarryHu1988/PDFLibrarian/releases`
+- 官网首页：`https://larryhu.com/PDFLibrarian/`
 
 ## 二、分发信息
 
@@ -74,7 +75,7 @@
 复制：
 
 ```text
-https://larryhu1988.github.io/PDFLibrarian/privacy-policy/
+https://larryhu.com/PDFLibrarian/privacy-policy/
 ```
 
 ### 4. 支持网址
@@ -82,7 +83,7 @@ https://larryhu1988.github.io/PDFLibrarian/privacy-policy/
 复制：
 
 ```text
-https://larryhu1988.github.io/PDFLibrarian/support/
+https://larryhu.com/PDFLibrarian/support/
 ```
 
 ### 5. 版权
@@ -288,7 +289,7 @@ Important notes for review:
 
 ## 九、宣传预览图
 
-说明：macOS 的 `App 预览` 视频是可选项，不是必须项。这里额外准备了宣传预览图，方便你做展示、邮件或网页素材。
+说明：macOS 的 `App 预览` 视频是可选项，不是必须项。这里额外准备了宣传预览图，方便你做展示、邮件或网页素材；真正上传到 App Store Connect 的仍然优先使用上面的 `2880 x 1800` 截图。
 
 - `/Users/larry/Documents/PDF Librarian/docs/app-store/preview/preview-en-US.png`
 - `/Users/larry/Documents/PDF Librarian/docs/app-store/preview/preview-zh-Hans.png`
