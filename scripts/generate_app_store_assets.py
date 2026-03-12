@@ -154,13 +154,13 @@ SLIDES = {
 PREVIEWS = {
     'en-US': {
         'eyebrow': 'PDF LIBRARIAN',
-        'title': 'Clean metadata\nand rename with context',
+        'title': 'Clean metadata\nRename with context',
         'subtitle': 'Search, confirm, write, and rename in one calmer desktop workflow.',
         'points': ['Multi-source lookup', 'Editable Dublin Core write'],
     },
     'zh-Hans': {
         'eyebrow': 'PDF LIBRARIAN',
-        'title': '整理元数据\n并统一命名',
+        'title': '整理元数据\n统一命名',
         'subtitle': '完成检索、确认、写入与重命名，让资料库更整洁',
         'points': ['多源检索', '可编辑写入'],
     },
@@ -369,6 +369,53 @@ def draw_text_card(canvas: Image.Image, locale: str, cfg: dict, is_dark: bool, p
             fx += w + 14
 
 
+def draw_preview_copy(canvas: Image.Image, locale: str, cfg: dict):
+    draw = ImageDraw.Draw(canvas)
+    if locale == 'zh-Hans':
+        title_font = font(CN_TITLE_FONT, 78)
+        sub_font = font(CN_BODY_FONT, 31)
+        body_font = font(CN_BODY_FONT, 25)
+        eyebrow_font = font(CN_BODY_FONT, 19)
+    else:
+        title_font = font(EN_TITLE_FONT, 72)
+        sub_font = font(EN_BODY_FONT, 29)
+        body_font = font(EN_BODY_FONT, 24)
+        eyebrow_font = font(EN_BODY_FONT, 19)
+    brand_font = font(BRAND_FONT, 46)
+
+    x = 88
+    logo = Image.open(LOGO).convert('RGBA').resize((98, 98), Image.Resampling.LANCZOS)
+    canvas.alpha_composite(logo, (x, 84))
+    text_fill = (28, 38, 56)
+    sub_fill = (92, 104, 124)
+    accent = (84, 122, 220)
+    divider = (219, 226, 236)
+
+    draw.text((x + 122, 96), 'PDF Librarian', font=brand_font, fill=text_fill)
+    chip(draw, (x, 202), cfg['eyebrow'], eyebrow_font,
+         fill=(232, 239, 252, 255),
+         stroke=(196, 213, 239, 255),
+         text_fill=accent)
+    draw.line((x, 248, x + 620, 248), fill=divider, width=2)
+
+    title = wrap_text(draw, cfg['title'], title_font, 620, spacing=12 if locale != 'zh-Hans' else 16)
+    title_y = 286
+    title_spacing = 12 if locale != 'zh-Hans' else 16
+    draw.multiline_text((x, title_y), title, font=title_font, fill=text_fill, spacing=title_spacing)
+    title_box = draw.multiline_textbbox((x, title_y), title, font=title_font, spacing=title_spacing)
+
+    subtitle = wrap_text(draw, cfg['subtitle'], sub_font, 640, spacing=10)
+    sub_y = title_box[3] + 24
+    draw.multiline_text((x, sub_y), subtitle, font=sub_font, fill=sub_fill, spacing=10)
+    sub_box = draw.multiline_textbbox((x, sub_y), subtitle, font=sub_font, spacing=10)
+
+    point_y = sub_box[3] + 54
+    for idx, point in enumerate(cfg['points']):
+        py = point_y + idx * 68
+        draw.ellipse((x + 2, py + 10, x + 18, py + 26), fill=accent)
+        draw.text((x + 36, py), point, font=body_font, fill=text_fill)
+
+
 def load_slide_image(locale: str, cfg: dict, is_dark: bool) -> Image.Image:
     img = Image.open(cfg['image'])
     return prepare_shot(img, cfg.get('crop_box'))
@@ -427,19 +474,19 @@ def make_slide(locale: str, idx: int, cfg: dict):
 
 def make_preview(locale: str):
     cfg = PREVIEWS[locale]
-    bg = gradient((PW, PH), (249, 251, 255), (214, 228, 246))
+    bg = gradient((PW, PH), (250, 251, 255), (220, 231, 244))
     canvas = bg.convert('RGBA')
-    add_glow(canvas, (-120, -80, 680, 460), (98, 145, 252, 92), 142)
-    add_glow(canvas, (1080, 520, 2040, 1240), (22, 164, 255, 82), 170)
+    add_glow(canvas, (1160, 520, 2060, 1240), (32, 164, 255, 54), 188)
+    add_glow(canvas, (1180, 620, 2140, 1320), (100, 136, 248, 48), 210)
 
-    draw_text_card(canvas, locale, cfg, is_dark=False, preview=True)
+    draw_preview_copy(canvas, locale, cfg)
 
     light_source = RAW / ('en-top-light-actual.png' if locale == 'en-US' else 'zh-top-light-actual.png')
     dark_source = RAW / ('en-rename-dark-actual.png' if locale == 'en-US' else 'zh-rename-dark-actual.png')
     light = screenshot_panel(prepare_shot(Image.open(light_source)), False)
     dark = screenshot_detail_panel(prepare_shot(Image.open(dark_source), (42, 892, 1935, 1508)), True, max_w=760, max_h=330)
-    light = fit_image(light, 840, 560)
-    dark = fit_image(dark, 760, 330)
+    light = fit_image(light, 820, 548)
+    dark = fit_image(dark, 720, 312)
 
     def paste_panel(panel: Image.Image, pos: tuple[int, int], shadow_alpha: int):
         sh = Image.new('RGBA', canvas.size, (0, 0, 0, 0))
@@ -451,8 +498,8 @@ def make_preview(locale: str):
         canvas.alpha_composite(sh)
         canvas.alpha_composite(panel, pos)
 
-    paste_panel(light, (1015, 120), 72)
-    paste_panel(dark, (1130, 585), 98)
+    paste_panel(light, (1040, 116), 62)
+    paste_panel(dark, (1168, 610), 82)
 
     out_dir = PREVIEW_OUT
     out_dir.mkdir(parents=True, exist_ok=True)
