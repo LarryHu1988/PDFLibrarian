@@ -98,6 +98,7 @@
 			buildPhases = (
 				6B4231D827EAAC16C0B2AAC8 /* Sources */,
 				6858A848A6D3B5EC729E111C /* Resources */,
+				B51779D6A89A44EEB3A61B21 /* Bundle ExifTool */,
 			);
 			buildRules = (
 			);
@@ -117,9 +118,10 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2630;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					7C99328501EE91FA234E830F = {
+						DevelopmentTeam = 2S7X36GQC9;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -153,6 +155,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B51779D6A89A44EEB3A61B21 /* Bundle ExifTool */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = ();
+			inputPaths = (
+				"$(SRCROOT)/scripts/bundle_exiftool.sh",
+				"$(SRCROOT)/vendor/exiftool/Image-ExifTool-13.59.tar.gz",
+				"$(SRCROOT)/vendor/exiftool/ARTISTIC.txt",
+				"$(SRCROOT)/vendor/exiftool/NOTICE.txt",
+			);
+			name = "Bundle ExifTool";
+			outputFileListPaths = (
+				"$(SRCROOT)/vendor/exiftool/BundleOutputs.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "/bin/bash \"$SRCROOT/scripts/bundle_exiftool.sh\" \"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6B4231D827EAAC16C0B2AAC8 /* Sources */ = {
@@ -259,6 +283,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2S7X36GQC9;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -327,6 +352,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2S7X36GQC9;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;

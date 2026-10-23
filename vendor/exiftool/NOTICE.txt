@@ -1,0 +1,18 @@
+ExifTool 13.59 by Phil Harvey
+Copyright (c) 2003-2026, Phil Harvey (philharvey66 at gmail.com).
+https://exiftool.org/
+
+The bundled exiftool script and libraries are unmodified upstream source.
+Their headers license them under the same terms as Perl itself; this
+distribution uses the Artistic License option. See ARTISTIC.txt and the
+copyright/license notices retained in the source files. The upstream
+repository LICENSE and README are also retained verbatim.
+
+Source: https://github.com/exiftool/exiftool/tree/13.59
+Commit: 2200871d9cef988051d2a99d67df3bda6cbb30a8
+Archive: https://codeload.github.com/exiftool/exiftool/tar.gz/refs/tags/13.59
+Archive SHA-256: 87d3317882fdae9cb4dcfe57a96a378d0132ffc02c731315bf128b19ddcf7aac
+Artistic text: https://raw.githubusercontent.com/Perl/perl5/v5.30.3/Artistic
+
+PDF Librarian invokes ExifTool internally to write confirmed PDF metadata.
+The application's proprietary license does not apply to this component.

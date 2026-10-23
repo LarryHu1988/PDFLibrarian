@@ -1,0 +1,14 @@
+{"id":"image_001","type":"image","path":"assets/en-US/05.png","source":"existing","description":"05","width":2880,"height":1800,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_002","type":"image","path":"assets/en-US/06.png","source":"existing","description":"06","width":2880,"height":1800,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_003","type":"image","path":"assets/en-US/confirmation.png","source":"existing","description":"confirmation","width":1760,"height":1360,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_004","type":"image","path":"assets/en-US/video-1.png","source":"existing","description":"video 1","width":2560,"height":1440,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_005","type":"image","path":"assets/en-US/video-2.png","source":"existing","description":"video 2","width":2560,"height":1440,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_006","type":"image","path":"assets/en-US/video-3.png","source":"existing","description":"video 3","width":2560,"height":1440,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_007","type":"image","path":"assets/en-US/video-4.png","source":"existing","description":"video 4","width":2560,"height":1440,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_008","type":"image","path":"assets/zh-Hans/05.png","source":"existing","description":"05","width":2880,"height":1800,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_009","type":"image","path":"assets/zh-Hans/06.png","source":"existing","description":"06","width":2880,"height":1800,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_010","type":"image","path":"assets/zh-Hans/confirmation.png","source":"existing","description":"confirmation","width":1760,"height":1360,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_011","type":"image","path":"assets/zh-Hans/video-1.png","source":"existing","description":"video 1","width":2560,"height":1440,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_012","type":"image","path":"assets/zh-Hans/video-2.png","source":"existing","description":"video 2","width":2560,"height":1440,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_013","type":"image","path":"assets/zh-Hans/video-3.png","source":"existing","description":"video 3","width":2560,"height":1440,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_014","type":"image","path":"assets/zh-Hans/video-4.png","source":"existing","description":"video 4","width":2560,"height":1440,"provenance":{"provider":"local","adopted":true}}

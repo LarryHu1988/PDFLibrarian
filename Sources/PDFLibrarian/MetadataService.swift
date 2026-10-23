@@ -63,6 +63,53 @@ struct MetadataService {
         }
     }
 
+    // Read the actual embedded values, preferring XMP Dublin Core over legacy PDF Info.
+    // Missing fields stay missing; publication dates and language are never inferred.
+    func readDublinCoreMetadata(for fileURL: URL) throws -> [String: String] {
+        try withSecurityScopedAccess(to: fileURL) {
+            guard let document = PDFDocument(url: fileURL), !document.isLocked else {
+                throw AppError.readFailure(fileURL)
+            }
+            guard let tool = resolveExifToolPath() else {
+                throw AppError.invalidInput("未找到内置 exiftool，无法读取文件当前元数据。")
+            }
+            let arguments = ["-config", "", "-j", "-G1", "-s", "-XMP-dc:all", "-PDF:Title", "-PDF:Author", "-PDF:Subject", "-PDF:Keywords", "-PDF:Language", fileURL.path]
+            var lastError = "无法读取 PDF 元数据"
+            for command in resolveExifToolCommands(exifToolPath: tool) {
+                let result = runProcess(command.executable, command.prefixArguments + arguments)
+                guard result.didLaunch && result.code == 0 else {
+                    lastError = result.stderr.isEmpty ? lastError : result.stderr
+                    continue
+                }
+                guard let data = result.stdout.data(using: .utf8),
+                      let records = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]],
+                      let record = records.first, record["Error"] == nil, record["ExifTool:Error"] == nil else {
+                    throw AppError.invalidInput("无法解析 PDF 当前元数据")
+                }
+                let tags = ["title": "Title", "creator": "Creator", "publisher": "Publisher", "date": "Date",
+                            "language": "Language", "type": "Type", "format": "Format", "identifier": "Identifier",
+                            "subject": "Subject", "source": "Source", "relation": "Relation", "description": "Description"]
+                func string(_ value: Any?) -> String? {
+                    if let values = value as? [Any] { return values.compactMap { string($0) }.joined(separator: ", ") }
+                    if let number = value as? NSNumber { return number.stringValue }
+                    return value as? String
+                }
+                let legacy = ["title": ["PDF:Title"], "creator": ["PDF:Author"],
+                              "subject": ["PDF:Subject", "PDF:Keywords"], "language": ["PDF:Language"]]
+                var values: [String: String] = [:]
+                for (field, tag) in tags {
+                    if let value = string(record["XMP-dc:\(tag)"]) {
+                        values["dc:\(field)"] = value
+                    } else if let value = (legacy[field] ?? []).compactMap({ string(record[$0]) }).first {
+                        values["dc:\(field)"] = value
+                    }
+                }
+                return values
+            }
+            throw AppError.invalidInput(lastError.trimmingCharacters(in: .whitespacesAndNewlines))
+        }
+    }
+
     func writeMetadata(fileURL: URL, key: String, value: String) throws {
         try withSecurityScopedAccess(to: fileURL) {
             try writeMetadataInternal(fileURL: fileURL, key: key, value: value)
@@ -222,7 +269,8 @@ struct MetadataService {
         try removeAllXAttrs(fileURL: workingPDFURL)
 
         // Clear all embedded metadata first, then write the mapped Dublin Core fields.
-        let exifToolArgs = ["-overwrite_original", "-P", "-all="] + assignments + [workingPDFURL.path]
+        // Ignore user/global configuration so the bundled writer behaves consistently.
+        let exifToolArgs = ["-config", "", "-overwrite_original", "-P", "-all="] + assignments + [workingPDFURL.path]
         var launchErrors: [String] = []
         var lastExecutionError: String?
         var writeSucceeded = false
@@ -321,27 +369,9 @@ struct MetadataService {
     }
 
     private func resolveExifToolCommands(exifToolPath: String) -> [ExifToolCommand] {
-        if isBundledExifToolPath(exifToolPath) {
-            var candidates: [ExifToolCommand] = [
-                ExifToolCommand(executable: exifToolPath, prefixArguments: [])
-            ]
-
-            if fileManager.isExecutableFile(atPath: "/usr/bin/perl") {
-                candidates.append(ExifToolCommand(executable: "/usr/bin/perl", prefixArguments: [exifToolPath]))
-            }
-            if fileManager.isExecutableFile(atPath: "/usr/bin/env") {
-                candidates.append(ExifToolCommand(executable: "/usr/bin/env", prefixArguments: ["perl", exifToolPath]))
-            }
-
-            var unique: [ExifToolCommand] = []
-            var seen = Set<String>()
-            for command in candidates {
-                let key = command.executable + "|" + command.prefixArguments.joined(separator: "\u{1f}")
-                if seen.insert(key).inserted {
-                    unique.append(command)
-                }
-            }
-            return unique
+        if isBundledExifToolPath(exifToolPath), fileManager.isExecutableFile(atPath: "/usr/bin/perl") {
+            // Use macOS Perl explicitly; do not select a Homebrew interpreter from PATH.
+            return [ExifToolCommand(executable: "/usr/bin/perl", prefixArguments: [exifToolPath])]
         }
         return [ExifToolCommand(executable: exifToolPath, prefixArguments: [])]
     }
@@ -366,6 +396,11 @@ struct MetadataService {
 
         var failures: [String] = []
         for name in names {
+            // macOS owns these security attributes. Sandboxed apps cannot remove
+            // them; they are not document metadata and must remain intact.
+            if ["com.apple.quarantine", "com.apple.macl", "com.apple.provenance", "com.apple.rootless"].contains(name) {
+                continue
+            }
             if removexattr(fileURL.path, name, 0) != 0 {
                 let errorCode = errno
                 if errorCode == ENOATTR {
@@ -418,6 +453,10 @@ struct MetadataService {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: executable)
         process.arguments = arguments
+        var environment = ProcessInfo.processInfo.environment
+        environment.removeValue(forKey: "PERL5LIB")
+        environment.removeValue(forKey: "PERL5OPT")
+        process.environment = environment
 
         let outputPipe = Pipe()
         let errorPipe = Pipe()
@@ -426,9 +465,23 @@ struct MetadataService {
 
         do {
             try process.run()
+            let group = DispatchGroup()
+            let output = ProcessOutputData()
+            let errors = ProcessOutputData()
+            group.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                output.store(outputPipe.fileHandleForReading.readDataToEndOfFile())
+                group.leave()
+            }
+            group.enter()
+            DispatchQueue.global(qos: .userInitiated).async {
+                errors.store(errorPipe.fileHandleForReading.readDataToEndOfFile())
+                group.leave()
+            }
             process.waitUntilExit()
-            let outData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-            let errData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+            group.wait()
+            let outData = output.read()
+            let errData = errors.read()
             return (
                 process.terminationStatus,
                 String(data: outData, encoding: .utf8) ?? "",
@@ -525,4 +578,11 @@ struct MetadataService {
 
         return names
     }
+}
+
+private final class ProcessOutputData: @unchecked Sendable {
+    private let lock = NSLock()
+    private var data = Data()
+    func store(_ value: Data) { lock.lock(); defer { lock.unlock() }; data = value }
+    func read() -> Data { lock.lock(); defer { lock.unlock() }; return data }
 }

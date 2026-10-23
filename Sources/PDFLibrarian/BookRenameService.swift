@@ -46,15 +46,36 @@ struct BookRenameService {
             fallbackExtension: fileURL.pathExtension
         )
         let targetURL = uniqueURL(in: fileURL.deletingLastPathComponent(), fileName: finalFileName, excluding: fileURL)
-        if isSameFileURL(targetURL, fileURL) {
+        return try moveFile(at: fileURL, to: targetURL)
+    }
+
+    func moveFile(at fileURL: URL, to destinationURL: URL) throws -> URL {
+        let finalDestinationURL = normalizedDestinationURL(
+            destinationURL,
+            fallbackExtension: fileURL.pathExtension
+        )
+        if isSameFileURL(finalDestinationURL, fileURL) {
             return fileURL
         }
 
         do {
-            try fileManager.moveItem(at: fileURL, to: targetURL)
-            return targetURL
+            return try withSecurityScopedAccess(to: fileURL) {
+                try withSecurityScopedAccess(to: finalDestinationURL.deletingLastPathComponent()) {
+                    if fileManager.fileExists(atPath: finalDestinationURL.path) {
+                        _ = try fileManager.replaceItemAt(
+                            finalDestinationURL,
+                            withItemAt: fileURL,
+                            backupItemName: nil,
+                            options: [.usingNewMetadataOnly]
+                        )
+                    } else {
+                        try fileManager.moveItem(at: fileURL, to: finalDestinationURL)
+                    }
+                    return finalDestinationURL
+                }
+            }
         } catch {
-            throw AppError.moveFailure(fileURL, targetURL)
+            throw AppError.moveFailure(fileURL, finalDestinationURL)
         }
     }
 
@@ -153,6 +174,20 @@ struct BookRenameService {
         }
     }
 
+    private func normalizedDestinationURL(_ destinationURL: URL, fallbackExtension: String) -> URL {
+        let directoryURL = destinationURL.deletingLastPathComponent()
+        let rawBaseName = destinationURL
+            .deletingPathExtension()
+            .lastPathComponent
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanBaseName = sanitizeFileName(rawBaseName)
+        let ext = sanitizeExtension(
+            destinationURL.pathExtension.isEmpty ? fallbackExtension : destinationURL.pathExtension
+        )
+        let finalFileName = ext.isEmpty ? cleanBaseName : "\(cleanBaseName).\(ext)"
+        return directoryURL.appendingPathComponent(finalFileName)
+    }
+
     private func sanitizeFieldToken(_ raw: String) -> String {
         let invalid = CharacterSet(charactersIn: "/:\\?%*|\"<>")
         let converted = raw.unicodeScalars.map { invalid.contains($0) ? Character(".") : Character($0) }
@@ -182,6 +217,16 @@ struct BookRenameService {
     private func tokenOrFallback(_ raw: String, fallback: String) -> String {
         let clean = raw.trimmingCharacters(in: .whitespacesAndNewlines)
         return clean.isEmpty ? fallback : clean
+    }
+
+    private func withSecurityScopedAccess<T>(to fileURL: URL, operation: () throws -> T) throws -> T {
+        let didStartAccess = fileURL.startAccessingSecurityScopedResource()
+        defer {
+            if didStartAccess {
+                fileURL.stopAccessingSecurityScopedResource()
+            }
+        }
+        return try operation()
     }
 
     private func isSameFileURL(_ lhs: URL, _ rhs: URL) -> Bool {

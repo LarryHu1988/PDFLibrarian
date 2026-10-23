@@ -4,3 +4,17 @@ dist/
 *.xcuserstate
 xcuserdata/
 *.xcworkspace/xcuserdata/
+
+# Release evidence, local sessions, and generated video renders
+.asc/
+**/.hyperframes/
+**/node_modules/
+videos/**/renders/
+*.p12
+*.p8
+*.key
+*.provisionprofile
+*.mobileprovision
+
+__pycache__/
+*.pyc

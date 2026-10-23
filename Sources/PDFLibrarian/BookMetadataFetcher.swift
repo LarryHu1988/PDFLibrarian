@@ -828,7 +828,7 @@ final class BookMetadataFetcher {
     private func requestData(url: URL, headers: [String: String] = [:]) async throws -> Data {
         var req = URLRequest(url: url)
         req.timeoutInterval = 20
-        req.setValue("PDFLibrarian/1.0.0", forHTTPHeaderField: "User-Agent")
+        req.setValue(userAgentValue, forHTTPHeaderField: "User-Agent")
         for (key, value) in headers {
             req.setValue(value, forHTTPHeaderField: key)
         }
@@ -861,6 +861,17 @@ final class BookMetadataFetcher {
     ].joined(separator: ",")
 
     private let browserUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36"
+
+    private var userAgentValue: String {
+        let shortVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "dev"
+        let buildVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? shortVersion
+
+        if buildVersion.isEmpty || buildVersion == shortVersion {
+            return "PDFLibrarian/\(shortVersion)"
+        }
+
+        return "PDFLibrarian/\(shortVersion) (\(buildVersion))"
+    }
 }
 
 private struct ParsedDoubanAbstract {

@@ -4,6 +4,19 @@ import PDFKit
 struct PDFLibraryService {
     private let fileManager = FileManager.default
 
+    func collectPDFs(from sourceURLs: [URL]) throws -> [URL] {
+        var seen = Set<String>()
+        var pdfs: [URL] = []
+        for source in sourceURLs {
+            for url in try collectPDFs(from: source) {
+                let key = url.standardizedFileURL.resolvingSymlinksInPath().path
+                if seen.insert(key).inserted { pdfs.append(url) }
+            }
+        }
+        guard !pdfs.isEmpty else { throw AppError.invalidFile }
+        return pdfs.sorted { $0.path.localizedStandardCompare($1.path) == .orderedAscending }
+    }
+
     func collectPDFs(from sourceURL: URL) throws -> [URL] {
         var isDir: ObjCBool = false
         guard fileManager.fileExists(atPath: sourceURL.path, isDirectory: &isDir) else {

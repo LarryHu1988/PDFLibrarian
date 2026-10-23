@@ -3,88 +3,125 @@ import Foundation
 enum AppLanguage: String, CaseIterable, Identifiable, Hashable {
     case simplifiedChinese = "zh-Hans"
     case english = "en"
-    case spanish = "es"
-    case hindi = "hi"
-    case arabic = "ar"
-    case french = "fr"
-    case portuguese = "pt"
-    case russian = "ru"
-    case japanese = "ja"
-    case german = "de"
-
-    static let supportedTopTen: [AppLanguage] = [
-        .simplifiedChinese,
-        .english,
-        .spanish,
-        .hindi,
-        .arabic,
-        .french,
-        .portuguese,
-        .russian,
-        .japanese,
-        .german
-    ]
 
     var id: String { rawValue }
-
-    var localeIdentifier: String {
-        switch self {
-        case .simplifiedChinese:
-            return "zh-Hans"
-        default:
-            return rawValue
-        }
-    }
-
-    var nativeName: String {
-        switch self {
-        case .simplifiedChinese:
-            return "简体中文"
-        case .english:
-            return "English"
-        case .spanish:
-            return "Español"
-        case .hindi:
-            return "हिन्दी"
-        case .arabic:
-            return "العربية"
-        case .french:
-            return "Français"
-        case .portuguese:
-            return "Português"
-        case .russian:
-            return "Русский"
-        case .japanese:
-            return "日本語"
-        case .german:
-            return "Deutsch"
-        }
-    }
+    var localeIdentifier: String { rawValue }
+    var nativeName: String { self == .simplifiedChinese ? "简体中文" : "English" }
 
     static var systemPreferred: AppLanguage {
-        from(code: Locale.preferredLanguages.first) ?? .simplifiedChinese
+        from(code: Locale.preferredLanguages.first) ?? .english
     }
 
     static func from(code: String?) -> AppLanguage? {
         guard let code else { return nil }
-        if let exact = AppLanguage(rawValue: code) { return exact }
-
         let lower = code.lowercased()
         if lower.hasPrefix("zh") { return .simplifiedChinese }
         if lower.hasPrefix("en") { return .english }
-        if lower.hasPrefix("es") { return .spanish }
-        if lower.hasPrefix("hi") { return .hindi }
-        if lower.hasPrefix("ar") { return .arabic }
-        if lower.hasPrefix("fr") { return .french }
-        if lower.hasPrefix("pt") { return .portuguese }
-        if lower.hasPrefix("ru") { return .russian }
-        if lower.hasPrefix("ja") { return .japanese }
-        if lower.hasPrefix("de") { return .german }
         return nil
     }
 }
 
 enum AppTextKey {
+    case currentFileMetadata
+    case clearedValue
+    case statusMetadataReadFailed
+    case statusNoNonemptyWriteValues
+    case fileNameColorPreview
+    case suggestedFileNameLabel
+    case customNameColorHint
+    case validationSources
+    case metadataField
+    case modifiedFields
+    case modifiedValue
+    case writeHighlightHint
+    case fileQueueHint
+    case importSubtitle
+    case selectFileForDetails
+    case currentFile
+    case lookupColumnHint
+    case lookupOptions
+    case selectCandidateForDetails
+    case fieldColumnHint
+    case basicFields
+    case documentFields
+    case additionalFields
+    case includeField
+    case saveColumnHint
+    case noSaveItems
+    case fileDetailsTitle
+    case fileDetailsSubtitle
+    case fileLocation
+    case fileSize
+    case pageCount
+    case modifiedDate
+    case lookupPreparation
+    case candidateDetailsTitle
+    case candidateDetailsSubtitle
+    case editableValue
+    case originalSourceValue
+    case writeAllSelectedHint
+    case lookupThisFile
+    case useCandidateAndEdit
+    case reviewAndWrite
+
+    case themeBlue
+    case themeWarm
+    case themeGraphite
+    case workspaceWelcome
+    case importFiles
+    case moreActions
+    case workflowNavigation
+    case currentBatch
+    case batchEmpty
+    case navigationFiles
+    case navigationSearch
+    case navigationEdit
+    case navigationSave
+    case completed
+    case currentStepLabel
+    case pending
+    case settingsTitle
+    case searchResults
+    case allSources
+    case filterResults
+    case resultsEmptyTitle
+    case resultsEmptyDetail
+    case noFilteredResults
+    case backToSearch
+    case candidateHelp
+    case selectedResult
+    case chooseFileOrFolder
+    case metadataSources
+    case extractedSnippet
+    case editMetadata
+    case editorSubtitle
+    case selectedFieldsShort
+    case selectAllFields
+    case currentSource
+    case matchConfidence
+    case openSource
+    case moreFields
+    case saveSubtitle
+    case metadataWritten
+    case fileComplete
+    case writeFirst
+    case startLookup
+    case chooseSaveLocation
+    case backToEditor
+    case checkedFieldsOnly
+    case fieldTitle
+    case fieldAuthor
+    case fieldPublisher
+    case fieldYear
+    case fieldLanguage
+    case fieldType
+    case fieldFormat
+    case fieldIdentifier
+    case fieldSubject
+    case fieldSource
+    case fieldRelation
+    case fieldDescription
+
     case alertWriteTitle
     case buttonCancel
     case buttonConfirmWrite
@@ -201,27 +238,14 @@ enum AppLocalization {
     static func text(_ key: AppTextKey, language: AppLanguage? = nil) -> String {
         let lang = language ?? currentLanguage
 
+        if let workspace = workspaceText(key, language: lang) { return workspace }
+
         switch lang {
         case .simplifiedChinese:
             return chineseText(key)
         case .english:
             return englishText(key)
-        case .spanish:
-            return spanishText(key) ?? englishText(key)
-        case .hindi:
-            return hindiText(key) ?? englishText(key)
-        case .arabic:
-            return arabicText(key) ?? englishText(key)
-        case .french:
-            return frenchText(key) ?? englishText(key)
-        case .portuguese:
-            return portugueseText(key) ?? englishText(key)
-        case .russian:
-            return russianText(key) ?? englishText(key)
-        case .japanese:
-            return japaneseText(key) ?? englishText(key)
-        case .german:
-            return germanText(key) ?? englishText(key)
+
         }
     }
 
@@ -229,6 +253,111 @@ enum AppLocalization {
         let lang = language ?? currentLanguage
         let template = text(key, language: lang)
         return String(format: template, locale: Locale(identifier: lang.localeIdentifier), arguments: arguments)
+    }
+
+    private static func workspaceText(_ key: AppTextKey, language: AppLanguage) -> String? {
+        let chinese = language == .simplifiedChinese
+        switch key {
+        case .currentFileMetadata: return chinese ? "文件当前值" : "Current file value"
+        case .clearedValue: return chinese ? "清空" : "Clear"
+        case .statusMetadataReadFailed: return chinese ? "无法读取文件当前元数据：%@" : "Could not read current file metadata: %@"
+        case .statusNoNonemptyWriteValues: return chinese ? "请至少填写一个非空字段后再写入。" : "Enter at least one nonempty field before writing."
+        case .fileNameColorPreview: return chinese ? "文件名颜色预览" : "Filename color preview"
+        case .suggestedFileNameLabel: return chinese ? "建议文件名" : "Suggested filename"
+        case .customNameColorHint: return chinese ? "自定义名称暂不分色；按“标题_作者_出版社_年份_语言”排列可显示对应颜色。" : "Custom names stay neutral. Use title_author_publisher_year_language to show field colors."
+        case .validationSources: return chinese ? "校验来源" : "Validation sources"
+        case .metadataField: return chinese ? "字段" : "Field"
+        case .modifiedFields: return chinese ? "已修改" : "Modified"
+        case .modifiedValue: return chinese ? "已修改" : "Modified"
+        case .writeHighlightHint: return chinese ? "高亮表示与文件当前值不同的内容。“清空”行表示按现有写入规则将被移除的旧字段。确认后会清除旧元数据并写入已勾选字段。" : "Highlights show changes from the current file. Clear rows mark old fields removed by the write operation. Confirming clears old metadata and writes the checked fields."
+        case .fileQueueHint: return chinese ? "文件已列在左侧。点击文件可回到它当前的处理步骤。" : "Your PDFs are listed in the sidebar. Select one to resume its current step."
+        case .importSubtitle: return chinese ? "可一次选择多份 PDF 或文件夹，已选文件会显示在左栏。" : "Select multiple PDFs or folders. Selected files appear in the sidebar."
+        case .selectFileForDetails: return chinese ? "选择文件查看详情" : "Select a file to see its details"
+        case .currentFile: return chinese ? "当前文件" : "Current file"
+        case .lookupColumnHint: return chinese ? "检索后选择一个结果，在右侧核对详细信息。" : "Look up records, then select a result to inspect on the right."
+        case .lookupOptions: return chinese ? "检索条件与来源" : "Lookup hints and sources"
+        case .selectCandidateForDetails: return chinese ? "选择结果查看详情" : "Select a result to inspect"
+        case .fieldColumnHint: return chinese ? "勾选要写入的字段，点击字段在右侧编辑。" : "Check fields to include, then select a field to edit on the right."
+        case .basicFields: return chinese ? "基本信息" : "BASIC DETAILS"
+        case .documentFields: return chinese ? "文献信息" : "DOCUMENT DETAILS"
+        case .additionalFields: return chinese ? "其他字段" : "ADDITIONAL FIELDS"
+        case .includeField: return chinese ? "写入此字段" : "Include this field"
+        case .saveColumnHint: return chinese ? "选择已写入元数据的文件，核对命名并保存。" : "Select a PDF with written metadata to review its name and save it."
+        case .noSaveItems: return chinese ? "暂无可另存的文件" : "No PDFs ready to save"
+        case .fileDetailsTitle: return chinese ? "文件详情" : "File details"
+        case .fileDetailsSubtitle: return chinese ? "检查文件信息，为检索元数据做好准备。" : "Inspect this PDF before looking up its metadata."
+        case .fileLocation: return chinese ? "所在文件夹" : "Folder"
+        case .fileSize: return chinese ? "文件大小" : "File size"
+        case .pageCount: return chinese ? "页数" : "Pages"
+        case .modifiedDate: return chinese ? "修改日期" : "Modified"
+        case .lookupPreparation: return chinese ? "检索准备" : "LOOKUP HINTS"
+        case .candidateDetailsTitle: return chinese ? "候选详情" : "Record details"
+        case .candidateDetailsSubtitle: return chinese ? "核对来源、作者与出版信息，再进入编辑。" : "Check the source, authors and publication details before editing."
+        case .editableValue: return chinese ? "写入值" : "Value to write"
+        case .originalSourceValue: return chinese ? "来源原始值" : "Original source value"
+        case .writeAllSelectedHint: return chinese ? "确认时会核对并写入当前文件所有勾选字段，而不仅是正在编辑的字段。" : "Confirmation reviews and writes all checked fields for this PDF, including fields you are not currently editing."
+        case .lookupThisFile: return chinese ? "检索这个文件" : "Look up this PDF"
+        case .useCandidateAndEdit: return chinese ? "使用此结果并编辑" : "Use result and edit"
+        case .reviewAndWrite: return chinese ? "核对并写入" : "Review and write"
+        case .themeBlue: return chinese ? "清爽蓝白" : "Cool Blue"
+        case .themeWarm: return chinese ? "暖白青绿" : "Warm Sage"
+        case .themeGraphite: return chinese ? "石墨深色" : "Graphite"
+        case .workspaceWelcome: return chinese ? "整理你的 PDF 书籍与文献" : "Organize your books and papers"
+        case .importFiles: return chinese ? "导入 PDF" : "Import PDFs"
+        case .moreActions: return chinese ? "更多操作" : "More actions"
+        case .workflowNavigation: return chinese ? "工作流程" : "WORKFLOW"
+        case .currentBatch: return chinese ? "当前批次" : "CURRENT BATCH"
+        case .batchEmpty: return chinese ? "尚未导入 PDF，选择文件或文件夹开始整理。" : "Choose a PDF or folder to start your batch."
+        case .navigationFiles: return chinese ? "导入文件" : "Import PDFs"
+        case .navigationSearch: return chinese ? "检索书目" : "Find Metadata"
+        case .navigationEdit: return chinese ? "编辑写入" : "Edit & Write"
+        case .navigationSave: return chinese ? "另存命名" : "Save & Rename"
+        case .completed: return chinese ? "已完成" : "Completed"
+        case .currentStepLabel: return chinese ? "当前步骤" : "Current step"
+        case .pending: return chinese ? "待处理" : "Pending"
+        case .settingsTitle: return chinese ? "设置" : "Settings"
+        case .searchResults: return chinese ? "检索结果" : "Results"
+        case .allSources: return chinese ? "全部来源" : "All sources"
+        case .filterResults: return chinese ? "筛选检索结果" : "Filter results"
+        case .resultsEmptyTitle: return chinese ? "等待检索" : "Ready for lookup"
+        case .resultsEmptyDetail: return chinese ? "导入 PDF 后，使用文件名和提取的标题检索书目信息。" : "Import a PDF, then look up its title and filename to find bibliographic records."
+        case .noFilteredResults: return chinese ? "没有符合筛选条件的结果。" : "No results match your filter."
+        case .backToSearch: return chinese ? "返回检索" : "Back to lookup"
+        case .candidateHelp: return chinese ? "点击结果填入右侧字段" : "Select a result to fill the editor"
+        case .selectedResult: return chinese ? "已选用" : "Selected"
+        case .chooseFileOrFolder: return chinese ? "选择文件或文件夹…" : "Choose file or folder…"
+        case .metadataSources: return chinese ? "检索来源" : "Lookup sources"
+        case .extractedSnippet: return chinese ? "查看提取的内容" : "Extracted text"
+        case .editMetadata: return chinese ? "编辑元数据" : "Edit metadata"
+        case .editorSubtitle: return chinese ? "核对当前文件的书目信息。" : "Review the bibliographic details for this PDF."
+        case .selectedFieldsShort: return chinese ? "已选" : "Selected"
+        case .selectAllFields: return chinese ? "全选" : "Select all"
+        case .currentSource: return chinese ? "当前选用来源" : "Selected source"
+        case .matchConfidence: return chinese ? "匹配度" : "Match"
+        case .openSource: return chinese ? "查看来源记录" : "Open source record"
+        case .moreFields: return chinese ? "更多字段（3）" : "More fields (3)"
+        case .saveSubtitle: return chinese ? "确认文件名后，选择保存位置完成重命名。" : "Review the filename, then choose where to save the renamed PDF."
+        case .metadataWritten: return chinese ? "元数据已写入" : "Metadata written"
+        case .fileComplete: return chinese ? "当前文件已完成" : "This PDF is complete"
+        case .writeFirst: return chinese ? "请先确认并写入元数据" : "Write metadata first"
+        case .startLookup: return chinese ? "开始检索" : "Start lookup"
+        case .chooseSaveLocation: return chinese ? "选择保存位置…" : "Choose save location…"
+        case .backToEditor: return chinese ? "返回编辑" : "Back to editor"
+        case .checkedFieldsOnly: return chinese ? "仅写入勾选的字段" : "Only checked fields will be written"
+        case .fieldTitle: return chinese ? "标题" : "Title"
+        case .fieldAuthor: return chinese ? "作者" : "Authors"
+        case .fieldPublisher: return chinese ? "出版社" : "Publisher"
+        case .fieldYear: return chinese ? "出版年份" : "Year"
+        case .fieldLanguage: return chinese ? "语言" : "Language"
+        case .fieldType: return chinese ? "文献类型" : "Type"
+        case .fieldFormat: return chinese ? "格式" : "Format"
+        case .fieldIdentifier: return chinese ? "ISBN / DOI" : "ISBN / DOI"
+        case .fieldSubject: return chinese ? "主题" : "Subject"
+        case .fieldSource: return chinese ? "来源" : "Source"
+        case .fieldRelation: return chinese ? "关联" : "Relation"
+        case .fieldDescription: return chinese ? "描述" : "Description"
+        default: return nil
+        }
     }
 
     private static func englishText(_ key: AppTextKey) -> String {
@@ -242,7 +371,7 @@ enum AppLocalization {
         case .appTitle:
             return "PDF Book/Paper Metadata Assistant"
         case .appSubtitle:
-            return "4-step flow: select PDF -> online lookup & merge -> confirm write -> standard rename"
+            return "4-step flow: choose PDF -> online lookup & merge -> confirm write -> save and rename"
         case .chipPDFFiles:
             return "PDF Files"
         case .chipCurrentStatus:
@@ -274,13 +403,13 @@ enum AppLocalization {
         case .fieldSelectedPath:
             return "Selected Path"
         case .fieldSelectedPathPlaceholder:
-            return "Select a PDF file or folder"
+            return "Use Choose to select a PDF file or folder"
         case .buttonChoose:
             return "Choose"
         case .buttonLoadPDF:
             return "Load PDF"
         case .folderScanHint:
-            return "If a folder is selected, all PDF files inside it are scanned recursively."
+            return "Choose opens the standard macOS dialog. If a folder is selected, all PDF files inside it are scanned recursively."
         case .loadedPDFList:
             return "Loaded PDF List"
         case .noPDFLoaded:
@@ -348,15 +477,15 @@ enum AppLocalization {
         case .suggestedFileName:
             return "Suggested name: %@"
         case .renameFileNameLabel:
-            return "File name to apply (editable)"
+            return "Default file name for Save dialog"
         case .renameFileNamePlaceholder:
-            return "Edit final file name"
+            return "Edit the suggested final file name"
         case .renameRule:
             return "Rule: title_author_publisher_year_language.pdf"
         case .renameRuleNote:
-            return "Naming is generated from the latest written metadata; final rename uses the edited file name above."
+            return "The latest written metadata generates the default name; Confirm and Rename opens the standard macOS Save dialog so you can choose the final name and location."
         case .buttonRename:
-            return "Confirm and Rename"
+            return "Choose Location & Rename"
         case .buttonSkipRename:
             return "Skip Rename"
         case .noRenamePrompt:
@@ -370,7 +499,7 @@ enum AppLocalization {
         case .chipLanguageCode:
             return "Language: %@"
         case .chipValidated:
-            return "Validated: %@"
+            return "Validation sources"
         case .stageNotStarted:
             return "Not Started"
         case .stageLoaded:
@@ -404,7 +533,7 @@ enum AppLocalization {
         case .statusLoadFailed:
             return "Load failed: %@"
         case .statusSelectPDFFirst:
-            return "Please select a PDF first"
+            return "Please choose a PDF file or folder first"
         case .statusSearching:
             return "Searching online: %@"
         case .statusNoMatch:
@@ -449,6 +578,7 @@ enum AppLocalization {
             return "Move failed: %@ -> %@"
         case .errorNetworkFailure:
             return "Network request failed: %@"
+        default: return workspaceText(key, language: .english) ?? ""
         }
     }
 
@@ -463,7 +593,7 @@ enum AppLocalization {
         case .appTitle:
             return "PDF 书籍/文献元数据助手"
         case .appSubtitle:
-            return "按 4 步流程处理：选择 PDF -> 联网检索与字段合并 -> 确认写入 -> 标准重命名"
+            return "按 4 步流程处理：选择 PDF -> 联网检索与字段合并 -> 确认写入 -> 另存并重命名"
         case .chipPDFFiles:
             return "PDF 文件"
         case .chipCurrentStatus:
@@ -495,13 +625,13 @@ enum AppLocalization {
         case .fieldSelectedPath:
             return "已选路径"
         case .fieldSelectedPathPlaceholder:
-            return "请选择 PDF 文件或文件夹"
+            return "请通过“选择”按钮打开系统面板并选择 PDF 文件或文件夹"
         case .buttonChoose:
             return "选择"
         case .buttonLoadPDF:
             return "加载 PDF"
         case .folderScanHint:
-            return "如果选择的是文件夹，程序会递归扫描其中所有 PDF。"
+            return "“选择”会打开标准 macOS 文件面板；如果选择的是文件夹，程序会递归扫描其中所有 PDF。"
         case .loadedPDFList:
             return "已加载 PDF 列表"
         case .noPDFLoaded:
@@ -569,15 +699,15 @@ enum AppLocalization {
         case .suggestedFileName:
             return "建议命名：%@"
         case .renameFileNameLabel:
-            return "最终文件名（可编辑）"
+            return "保存面板中的默认文件名"
         case .renameFileNamePlaceholder:
-            return "可手动修改后再确认重命名"
+            return "可先编辑建议文件名，再打开保存面板"
         case .renameRule:
             return "规则：书名_作者_出版社_出版年_语言.pdf"
         case .renameRuleNote:
-            return "命名将基于最新写入元数据生成；确认时会按上方编辑后的文件名执行重命名。"
+            return "命名将基于最新写入元数据生成；点击确认后会打开标准 macOS 保存面板，由你选择最终文件名和保存位置。"
         case .buttonRename:
-            return "确认并重命名"
+            return "选择位置并重命名"
         case .buttonSkipRename:
             return "暂不重命名"
         case .noRenamePrompt:
@@ -591,7 +721,7 @@ enum AppLocalization {
         case .chipLanguageCode:
             return "语言: %@"
         case .chipValidated:
-            return "校验: %@"
+            return "校验来源"
         case .stageNotStarted:
             return "未开始"
         case .stageLoaded:
@@ -625,7 +755,7 @@ enum AppLocalization {
         case .statusLoadFailed:
             return "加载失败: %@"
         case .statusSelectPDFFirst:
-            return "请先选择一个 PDF"
+            return "请先选择一个 PDF 文件或文件夹"
         case .statusSearching:
             return "正在联网检索: %@"
         case .statusNoMatch:
@@ -670,342 +800,8 @@ enum AppLocalization {
             return "移动失败: %@ -> %@"
         case .errorNetworkFailure:
             return "网络请求失败: %@"
+        default: return workspaceText(key, language: .simplifiedChinese) ?? ""
         }
     }
 
-    private static func spanishText(_ key: AppTextKey) -> String? {
-        switch key {
-        case .alertWriteTitle: return "¿Confirmar escritura de metadatos?"
-        case .buttonCancel: return "Cancelar"
-        case .buttonConfirmWrite: return "Confirmar escritura"
-        case .chipPDFFiles: return "Archivos PDF"
-        case .chipCurrentStatus: return "Estado actual"
-        case .chipVersion: return "Versión"
-        case .chipLanguage: return "Idioma"
-        case .flowTitle: return "Pasos del flujo"
-        case .stepOne: return "Seleccionar PDF"
-        case .stepTwo: return "Buscar y combinar"
-        case .stepThree: return "Confirmar Dublin Core"
-        case .stepFour: return "Preguntar y renombrar"
-        case .cardOneTitle: return "1) Seleccionar PDF"
-        case .buttonChoose: return "Elegir"
-        case .buttonLoadPDF: return "Cargar PDF"
-        case .cardTwoTitle: return "2) Búsqueda en línea + combinación"
-        case .buttonSearchMetadata: return "Buscar metadatos en línea"
-        case .buttonSearching: return "Buscando..."
-        case .cardThreeTitle: return "3) Confirmar escritura Dublin Core"
-        case .buttonConfirmWriteDublin: return "Confirmar escritura Dublin Core"
-        case .cardFourTitle: return "4) Preguntar y renombrar"
-        case .buttonRename: return "Renombrar con regla estándar"
-        case .buttonSkipRename: return "Omitir renombrado"
-        case .executionLog: return "Registro de ejecución"
-        case .noLogs: return "Sin registros."
-        case .stageNotStarted: return "Sin iniciar"
-        case .stageLoaded: return "Cargado"
-        case .stageSearched: return "Buscado"
-        case .stageWritten: return "Escrito"
-        case .stageRenamed: return "Renombrado"
-        case .stageRenameSkipped: return "Renombrado omitido"
-        case .stageFailed: return "Error"
-        case .publicationBook: return "Libro"
-        case .publicationPaper: return "Artículo"
-        case .publicationUnknown: return "Desconocido"
-        case .statusReady: return "Listo"
-        default: return nil
-        }
-    }
-
-    private static func hindiText(_ key: AppTextKey) -> String? {
-        switch key {
-        case .alertWriteTitle: return "मेटाडेटा लिखना पुष्टि करें?"
-        case .buttonCancel: return "रद्द करें"
-        case .buttonConfirmWrite: return "लिखना पुष्टि करें"
-        case .chipPDFFiles: return "PDF फ़ाइलें"
-        case .chipCurrentStatus: return "वर्तमान स्थिति"
-        case .chipVersion: return "संस्करण"
-        case .chipLanguage: return "भाषा"
-        case .flowTitle: return "प्रक्रिया चरण"
-        case .stepOne: return "PDF चुनें"
-        case .stepTwo: return "खोजें और मर्ज करें"
-        case .stepThree: return "Dublin Core पुष्टि"
-        case .stepFour: return "पूछें और नाम बदलें"
-        case .cardOneTitle: return "1) PDF चुनें"
-        case .buttonChoose: return "चुनें"
-        case .buttonLoadPDF: return "PDF लोड करें"
-        case .cardTwoTitle: return "2) ऑनलाइन खोज + मर्ज"
-        case .buttonSearchMetadata: return "ऑनलाइन मेटाडेटा खोजें"
-        case .buttonSearching: return "खोज रहे हैं..."
-        case .cardThreeTitle: return "3) Dublin Core लिखने की पुष्टि"
-        case .buttonConfirmWriteDublin: return "Dublin Core लिखना पुष्टि करें"
-        case .cardFourTitle: return "4) पूछें और नाम बदलें"
-        case .buttonRename: return "मानक नियम से नाम बदलें"
-        case .buttonSkipRename: return "नाम बदलना छोड़ें"
-        case .executionLog: return "निष्पादन लॉग"
-        case .noLogs: return "कोई लॉग नहीं।"
-        case .stageNotStarted: return "शुरू नहीं"
-        case .stageLoaded: return "लोड हो गया"
-        case .stageSearched: return "खोजा गया"
-        case .stageWritten: return "लिखा गया"
-        case .stageRenamed: return "नाम बदला गया"
-        case .stageRenameSkipped: return "नाम बदलना छोड़ा गया"
-        case .stageFailed: return "त्रुटि"
-        case .publicationBook: return "पुस्तक"
-        case .publicationPaper: return "लेख"
-        case .publicationUnknown: return "अज्ञात"
-        case .statusReady: return "तैयार"
-        default: return nil
-        }
-    }
-
-    private static func arabicText(_ key: AppTextKey) -> String? {
-        switch key {
-        case .alertWriteTitle: return "تأكيد كتابة البيانات الوصفية؟"
-        case .buttonCancel: return "إلغاء"
-        case .buttonConfirmWrite: return "تأكيد الكتابة"
-        case .chipPDFFiles: return "ملفات PDF"
-        case .chipCurrentStatus: return "الحالة الحالية"
-        case .chipVersion: return "الإصدار"
-        case .chipLanguage: return "اللغة"
-        case .flowTitle: return "خطوات العمل"
-        case .stepOne: return "اختيار PDF"
-        case .stepTwo: return "بحث ودمج"
-        case .stepThree: return "تأكيد Dublin Core"
-        case .stepFour: return "اسأل وأعد التسمية"
-        case .cardOneTitle: return "1) اختيار PDF"
-        case .buttonChoose: return "اختيار"
-        case .buttonLoadPDF: return "تحميل PDF"
-        case .cardTwoTitle: return "2) بحث عبر الإنترنت + دمج"
-        case .buttonSearchMetadata: return "بحث البيانات الوصفية عبر الإنترنت"
-        case .buttonSearching: return "جارٍ البحث..."
-        case .cardThreeTitle: return "3) تأكيد كتابة Dublin Core"
-        case .buttonConfirmWriteDublin: return "تأكيد كتابة Dublin Core"
-        case .cardFourTitle: return "4) اسأل وأعد التسمية"
-        case .buttonRename: return "إعادة تسمية بالقاعدة القياسية"
-        case .buttonSkipRename: return "تخطي إعادة التسمية"
-        case .executionLog: return "سجل التنفيذ"
-        case .noLogs: return "لا توجد سجلات."
-        case .stageNotStarted: return "لم يبدأ"
-        case .stageLoaded: return "تم التحميل"
-        case .stageSearched: return "تم البحث"
-        case .stageWritten: return "تمت الكتابة"
-        case .stageRenamed: return "تمت إعادة التسمية"
-        case .stageRenameSkipped: return "تم تخطي إعادة التسمية"
-        case .stageFailed: return "خطأ"
-        case .publicationBook: return "كتاب"
-        case .publicationPaper: return "بحث"
-        case .publicationUnknown: return "غير معروف"
-        case .statusReady: return "جاهز"
-        default: return nil
-        }
-    }
-
-    private static func frenchText(_ key: AppTextKey) -> String? {
-        switch key {
-        case .alertWriteTitle: return "Confirmer l'écriture des métadonnées ?"
-        case .buttonCancel: return "Annuler"
-        case .buttonConfirmWrite: return "Confirmer l'écriture"
-        case .chipPDFFiles: return "Fichiers PDF"
-        case .chipCurrentStatus: return "État actuel"
-        case .chipVersion: return "Version"
-        case .chipLanguage: return "Langue"
-        case .flowTitle: return "Étapes du flux"
-        case .stepOne: return "Sélectionner PDF"
-        case .stepTwo: return "Recherche + fusion"
-        case .stepThree: return "Confirmer Dublin Core"
-        case .stepFour: return "Demander et renommer"
-        case .cardOneTitle: return "1) Sélectionner PDF"
-        case .buttonChoose: return "Choisir"
-        case .buttonLoadPDF: return "Charger PDF"
-        case .cardTwoTitle: return "2) Recherche en ligne + fusion"
-        case .buttonSearchMetadata: return "Rechercher les métadonnées"
-        case .buttonSearching: return "Recherche..."
-        case .cardThreeTitle: return "3) Confirmer l'écriture Dublin Core"
-        case .buttonConfirmWriteDublin: return "Confirmer l'écriture Dublin Core"
-        case .cardFourTitle: return "4) Demander et renommer"
-        case .buttonRename: return "Renommer selon la règle"
-        case .buttonSkipRename: return "Ignorer le renommage"
-        case .executionLog: return "Journal d'exécution"
-        case .noLogs: return "Aucun journal."
-        case .stageNotStarted: return "Non démarré"
-        case .stageLoaded: return "Chargé"
-        case .stageSearched: return "Recherché"
-        case .stageWritten: return "Écrit"
-        case .stageRenamed: return "Renommé"
-        case .stageRenameSkipped: return "Renommage ignoré"
-        case .stageFailed: return "Erreur"
-        case .publicationBook: return "Livre"
-        case .publicationPaper: return "Article"
-        case .publicationUnknown: return "Inconnu"
-        case .statusReady: return "Prêt"
-        default: return nil
-        }
-    }
-
-    private static func portugueseText(_ key: AppTextKey) -> String? {
-        switch key {
-        case .alertWriteTitle: return "Confirmar gravação dos metadados?"
-        case .buttonCancel: return "Cancelar"
-        case .buttonConfirmWrite: return "Confirmar gravação"
-        case .chipPDFFiles: return "Arquivos PDF"
-        case .chipCurrentStatus: return "Status atual"
-        case .chipVersion: return "Versão"
-        case .chipLanguage: return "Idioma"
-        case .flowTitle: return "Etapas do fluxo"
-        case .stepOne: return "Selecionar PDF"
-        case .stepTwo: return "Buscar e mesclar"
-        case .stepThree: return "Confirmar Dublin Core"
-        case .stepFour: return "Perguntar e renomear"
-        case .cardOneTitle: return "1) Selecionar PDF"
-        case .buttonChoose: return "Escolher"
-        case .buttonLoadPDF: return "Carregar PDF"
-        case .cardTwoTitle: return "2) Busca online + mesclagem"
-        case .buttonSearchMetadata: return "Buscar metadados online"
-        case .buttonSearching: return "Buscando..."
-        case .cardThreeTitle: return "3) Confirmar gravação Dublin Core"
-        case .buttonConfirmWriteDublin: return "Confirmar gravação Dublin Core"
-        case .cardFourTitle: return "4) Perguntar e renomear"
-        case .buttonRename: return "Renomear com regra padrão"
-        case .buttonSkipRename: return "Pular renomeação"
-        case .executionLog: return "Log de execução"
-        case .noLogs: return "Sem logs."
-        case .stageNotStarted: return "Não iniciado"
-        case .stageLoaded: return "Carregado"
-        case .stageSearched: return "Pesquisado"
-        case .stageWritten: return "Gravado"
-        case .stageRenamed: return "Renomeado"
-        case .stageRenameSkipped: return "Renomeação ignorada"
-        case .stageFailed: return "Erro"
-        case .publicationBook: return "Livro"
-        case .publicationPaper: return "Artigo"
-        case .publicationUnknown: return "Desconhecido"
-        case .statusReady: return "Pronto"
-        default: return nil
-        }
-    }
-
-    private static func russianText(_ key: AppTextKey) -> String? {
-        switch key {
-        case .alertWriteTitle: return "Подтвердить запись метаданных?"
-        case .buttonCancel: return "Отмена"
-        case .buttonConfirmWrite: return "Подтвердить запись"
-        case .chipPDFFiles: return "PDF файлы"
-        case .chipCurrentStatus: return "Текущий статус"
-        case .chipVersion: return "Версия"
-        case .chipLanguage: return "Язык"
-        case .flowTitle: return "Шаги процесса"
-        case .stepOne: return "Выбрать PDF"
-        case .stepTwo: return "Поиск и объединение"
-        case .stepThree: return "Подтвердить Dublin Core"
-        case .stepFour: return "Спросить и переименовать"
-        case .cardOneTitle: return "1) Выбрать PDF"
-        case .buttonChoose: return "Выбрать"
-        case .buttonLoadPDF: return "Загрузить PDF"
-        case .cardTwoTitle: return "2) Онлайн-поиск + объединение"
-        case .buttonSearchMetadata: return "Искать метаданные онлайн"
-        case .buttonSearching: return "Поиск..."
-        case .cardThreeTitle: return "3) Подтвердить запись Dublin Core"
-        case .buttonConfirmWriteDublin: return "Подтвердить запись Dublin Core"
-        case .cardFourTitle: return "4) Спросить и переименовать"
-        case .buttonRename: return "Переименовать по правилу"
-        case .buttonSkipRename: return "Пропустить переименование"
-        case .executionLog: return "Журнал выполнения"
-        case .noLogs: return "Пока нет журналов."
-        case .stageNotStarted: return "Не начато"
-        case .stageLoaded: return "Загружено"
-        case .stageSearched: return "Найдено"
-        case .stageWritten: return "Записано"
-        case .stageRenamed: return "Переименовано"
-        case .stageRenameSkipped: return "Переименование пропущено"
-        case .stageFailed: return "Ошибка"
-        case .publicationBook: return "Книга"
-        case .publicationPaper: return "Статья"
-        case .publicationUnknown: return "Неизвестно"
-        case .statusReady: return "Готово"
-        default: return nil
-        }
-    }
-
-    private static func japaneseText(_ key: AppTextKey) -> String? {
-        switch key {
-        case .alertWriteTitle: return "メタデータ書き込みを確認しますか？"
-        case .buttonCancel: return "キャンセル"
-        case .buttonConfirmWrite: return "書き込み確認"
-        case .chipPDFFiles: return "PDFファイル"
-        case .chipCurrentStatus: return "現在の状態"
-        case .chipVersion: return "バージョン"
-        case .chipLanguage: return "言語"
-        case .flowTitle: return "ワークフロー"
-        case .stepOne: return "PDFを選択"
-        case .stepTwo: return "検索と統合"
-        case .stepThree: return "Dublin Core確認"
-        case .stepFour: return "確認してリネーム"
-        case .cardOneTitle: return "1) PDFを選択"
-        case .buttonChoose: return "選択"
-        case .buttonLoadPDF: return "PDFを読み込む"
-        case .cardTwoTitle: return "2) オンライン検索 + 統合"
-        case .buttonSearchMetadata: return "オンラインでメタデータ検索"
-        case .buttonSearching: return "検索中..."
-        case .cardThreeTitle: return "3) Dublin Core書き込み確認"
-        case .buttonConfirmWriteDublin: return "Dublin Core書き込み確認"
-        case .cardFourTitle: return "4) 確認してリネーム"
-        case .buttonRename: return "標準ルールでリネーム"
-        case .buttonSkipRename: return "リネームしない"
-        case .executionLog: return "実行ログ"
-        case .noLogs: return "ログはありません。"
-        case .stageNotStarted: return "未開始"
-        case .stageLoaded: return "読み込み済み"
-        case .stageSearched: return "検索済み"
-        case .stageWritten: return "書き込み済み"
-        case .stageRenamed: return "リネーム済み"
-        case .stageRenameSkipped: return "リネームをスキップ"
-        case .stageFailed: return "エラー"
-        case .publicationBook: return "書籍"
-        case .publicationPaper: return "論文"
-        case .publicationUnknown: return "不明"
-        case .statusReady: return "準備完了"
-        default: return nil
-        }
-    }
-
-    private static func germanText(_ key: AppTextKey) -> String? {
-        switch key {
-        case .alertWriteTitle: return "Schreiben der Metadaten bestätigen?"
-        case .buttonCancel: return "Abbrechen"
-        case .buttonConfirmWrite: return "Schreiben bestätigen"
-        case .chipPDFFiles: return "PDF-Dateien"
-        case .chipCurrentStatus: return "Aktueller Status"
-        case .chipVersion: return "Version"
-        case .chipLanguage: return "Sprache"
-        case .flowTitle: return "Ablaufschritte"
-        case .stepOne: return "PDF wählen"
-        case .stepTwo: return "Suchen und zusammenführen"
-        case .stepThree: return "Dublin Core bestätigen"
-        case .stepFour: return "Fragen und umbenennen"
-        case .cardOneTitle: return "1) PDF wählen"
-        case .buttonChoose: return "Wählen"
-        case .buttonLoadPDF: return "PDF laden"
-        case .cardTwoTitle: return "2) Online-Suche + Zusammenführung"
-        case .buttonSearchMetadata: return "Metadaten online suchen"
-        case .buttonSearching: return "Suche läuft..."
-        case .cardThreeTitle: return "3) Dublin Core schreiben bestätigen"
-        case .buttonConfirmWriteDublin: return "Dublin Core schreiben bestätigen"
-        case .cardFourTitle: return "4) Fragen und umbenennen"
-        case .buttonRename: return "Mit Standardregel umbenennen"
-        case .buttonSkipRename: return "Umbenennen überspringen"
-        case .executionLog: return "Ausführungsprotokoll"
-        case .noLogs: return "Keine Protokolle."
-        case .stageNotStarted: return "Nicht gestartet"
-        case .stageLoaded: return "Geladen"
-        case .stageSearched: return "Gesucht"
-        case .stageWritten: return "Geschrieben"
-        case .stageRenamed: return "Umbenannt"
-        case .stageRenameSkipped: return "Umbenennen übersprungen"
-        case .stageFailed: return "Fehler"
-        case .publicationBook: return "Buch"
-        case .publicationPaper: return "Paper"
-        case .publicationUnknown: return "Unbekannt"
-        case .statusReady: return "Bereit"
-        default: return nil
-        }
-    }
 }

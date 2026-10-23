@@ -1,31 +1,7 @@
-# App Store 截图拍摄清单
+# Release media — 1.5.0
 
-建议先做两套语言：
+Each language has six 2880×1800 screenshots: import, candidate records, field editor, blue rename, warm rename, and dark rename.
 
-- English
-- 简体中文
+The two previews are 1920×1080 at 30 fps, 29 seconds. They show the four steps, current-versus-proposed metadata confirmation, and three themes. Native production views are rendered with controlled demo data; the camera edit is authored in HyperFrames. These are application-view captures rather than a desktop recording.
 
-## 建议截图顺序
-
-1. 首页总览
-   - 展示四步流程、当前主题、主标题
-
-2. 联网检索候选结果
-   - 展示多来源候选列表和已选候选
-
-3. 第三步字段编辑
-   - 展示 Dublin Core 字段可编辑、可勾选写入
-
-4. 第四步重命名确认
-   - 展示基于最新元数据生成文件名，并可手动修改
-
-5. 多语言与外观切换
-   - 展示国际化和浅色/深色界面
-
-## 拍摄建议
-
-- 不要放空白状态
-- 用真实但不敏感的样例 PDF
-- 每张图只讲一个能力点
-- 第一张图要最容易让人秒懂产品用途
-- 中英文两套截图内容结构保持一致
+Run `scripts/capture_release.sh`, then `python3 scripts/generate_app_store_assets.py`. Video source is in `videos/app-preview-1.5.0`.

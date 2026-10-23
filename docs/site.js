@@ -2,10 +2,10 @@
   'use strict';
   const pdf = document.title.startsWith('PDF Librarian');
   const captions = pdf ? {
-    overview: ['01 / 选择文件', '01 / Select your files'],
-    search: ['02 / 找到资料', '02 / Find the details'],
-    edit: ['03 / 核对并写入', '03 / Review and write'],
-    rename: ['04 / 确认新名字', '04 / Give it a clear name']
+    overview: ['01 / 导入文件', '01 / Import PDFs'],
+    search: ['02 / 检索书目', '02 / Find Metadata'],
+    edit: ['03 / 编辑写入', '03 / Edit & Write'],
+    rename: ['04 / 另存命名', '04 / Save & Rename']
   } : {
     'eat-overview': ['KeepFit 饮食记录界面', 'KeepFit food overview'],
     'move-overview': ['KeepFit 运动记录界面', 'KeepFit exercise overview'],
@@ -22,6 +22,8 @@
       if (node.getAttribute('src') !== next) node.src = next;
       if (node.dataset.altZh) node.alt = lang === 'zh' ? node.dataset.altZh : node.dataset.altEn;
     });
+    const video = document.querySelector('#app-preview');
+    if(video && video.dataset.locale !== lang){video.dataset.locale=lang;video.poster=`assets/${lang}-overview.webp`;video.querySelector('source').src=`assets/${lang}-preview.mp4`;video.load();}
     const preview = document.querySelector('#preview-image');
     const selected = document.querySelector('[data-preview][aria-pressed="true"]');
     const label = captions[selected.dataset.preview][lang === 'zh' ? 0 : 1];

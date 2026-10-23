@@ -5,42 +5,15 @@ ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 APP_DISPLAY_NAME="PDF Librarian"
 APP_EXECUTABLE="PDFLibrarian"
 BUNDLE_ID="${BUNDLE_ID:-com.larry.pdflibrarian}"
-VERSION="${VERSION:-1.0.0}"
+LEGACY_VERSION="${VERSION:-}"
+MARKETING_VERSION="${MARKETING_VERSION:-${LEGACY_VERSION:-1.5.0}}"
+BUILD_VERSION="${BUILD_VERSION:-${LEGACY_VERSION:-2}}"
 BUILD_DIR="$ROOT_DIR/.build/release"
-APP_DIR="$ROOT_DIR/dist/${APP_DISPLAY_NAME}.app"
+APP_DIR="${APP_DIR:-$ROOT_DIR/dist/${APP_DISPLAY_NAME}.app}"
 EXECUTABLE="$BUILD_DIR/$APP_EXECUTABLE"
-EXIFTOOL_DIR="${EXIFTOOL_DIR:-}"
 ICON_ICNS_SOURCE="$ROOT_DIR/Sources/PDFLibrarian/Resources/AppIcon.icns"
 ICON_RESOURCE_NAME="AppIcon.icns"
 ICON_PLIST_BLOCK=""
-
-resolve_exiftool_dir() {
-  if [[ -n "$EXIFTOOL_DIR" && -x "$EXIFTOOL_DIR/bin/exiftool" && -d "$EXIFTOOL_DIR/lib" ]]; then
-    echo "$EXIFTOOL_DIR"
-    return 0
-  fi
-
-  if [[ -d "$ROOT_DIR/vendor/exiftool/libexec" && -x "$ROOT_DIR/vendor/exiftool/libexec/bin/exiftool" ]]; then
-    echo "$ROOT_DIR/vendor/exiftool/libexec"
-    return 0
-  fi
-
-  local hb_opt
-  hb_opt="$(ls -d /opt/homebrew/Cellar/exiftool/*/libexec 2>/dev/null | sort -V | tail -n 1 || true)"
-  if [[ -n "$hb_opt" && -x "$hb_opt/bin/exiftool" ]]; then
-    echo "$hb_opt"
-    return 0
-  fi
-
-  local hb_usr
-  hb_usr="$(ls -d /usr/local/Cellar/exiftool/*/libexec 2>/dev/null | sort -V | tail -n 1 || true)"
-  if [[ -n "$hb_usr" && -x "$hb_usr/bin/exiftool" ]]; then
-    echo "$hb_usr"
-    return 0
-  fi
-
-  return 1
-}
 
 cd "$ROOT_DIR"
 swift build -c release
@@ -49,29 +22,18 @@ rm -rf "$APP_DIR"
 mkdir -p "$APP_DIR/Contents/MacOS"
 mkdir -p "$APP_DIR/Contents/Resources"
 
-cp "$EXECUTABLE" "$APP_DIR/Contents/MacOS/$APP_EXECUTABLE"
+cp -X "$EXECUTABLE" "$APP_DIR/Contents/MacOS/$APP_EXECUTABLE"
 chmod +x "$APP_DIR/Contents/MacOS/$APP_EXECUTABLE"
 
 if [[ -f "$ICON_ICNS_SOURCE" ]]; then
-  cp "$ICON_ICNS_SOURCE" "$APP_DIR/Contents/Resources/$ICON_RESOURCE_NAME"
+  cp -X "$ICON_ICNS_SOURCE" "$APP_DIR/Contents/Resources/$ICON_RESOURCE_NAME"
   ICON_PLIST_BLOCK=$'    <key>CFBundleIconFile</key>\n    <string>AppIcon</string>'
 else
   echo "WARNING: App icon not found at $ICON_ICNS_SOURCE"
   echo "Run scripts/generate_app_icons.sh to generate AppIcon.icns"
 fi
 
-if EXIFTOOL_SRC="$(resolve_exiftool_dir)"; then
-  mkdir -p "$APP_DIR/Contents/Resources/ExifTool"
-  cp -R "$EXIFTOOL_SRC/bin" "$APP_DIR/Contents/Resources/ExifTool/"
-  mkdir -p "$APP_DIR/Contents/Resources/ExifTool/bin"
-  cp -R "$EXIFTOOL_SRC/lib/perl5/." "$APP_DIR/Contents/Resources/ExifTool/bin/lib/"
-  chmod +x "$APP_DIR/Contents/Resources/ExifTool/bin/exiftool"
-  echo "Bundled exiftool from: $EXIFTOOL_SRC"
-else
-  echo "ERROR: Unable to locate exiftool libexec (bin+lib)."
-  echo "Set EXIFTOOL_DIR=/path/to/exiftool/libexec and retry package."
-  exit 1
-fi
+/bin/bash "$ROOT_DIR/scripts/bundle_exiftool.sh" "$APP_DIR/Contents/Resources"
 
 cat > "$APP_DIR/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
@@ -85,9 +47,9 @@ cat > "$APP_DIR/Contents/Info.plist" <<PLIST
     <key>CFBundleIdentifier</key>
     <string>$BUNDLE_ID</string>
     <key>CFBundleVersion</key>
-    <string>$VERSION</string>
+    <string>$BUILD_VERSION</string>
     <key>CFBundleShortVersionString</key>
-    <string>$VERSION</string>
+    <string>$MARKETING_VERSION</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleExecutable</key>
@@ -105,6 +67,11 @@ ${ICON_PLIST_BLOCK}
 </plist>
 PLIST
 
+# iCloud/Finder can attach FinderInfo to a newly created .app directory.
+# These two attributes are forbidden by codesign; touch only this build output.
+xattr -r -d com.apple.FinderInfo "$APP_DIR" 2>/dev/null || true
+xattr -r -d com.apple.ResourceFork "$APP_DIR" 2>/dev/null || true
+
 if [[ -n "${SIGN_IDENTITY:-}" ]]; then
   codesign --force --deep --options runtime --sign "$SIGN_IDENTITY" "$APP_DIR"
   echo "Signed app with identity: $SIGN_IDENTITY"
@@ -116,6 +83,7 @@ else
 fi
 
 # Quick sanity check to ensure packaged app has a valid bundle signature.
-codesign --verify --deep --strict --verbose=2 "$APP_DIR"
+/bin/bash "$ROOT_DIR/scripts/verify_app_bundle.sh" "$APP_DIR"
 
 echo "App built: $APP_DIR"
+echo "Version: $MARKETING_VERSION ($BUILD_VERSION)"

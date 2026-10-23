@@ -1,6 +1,6 @@
 # Privacy Policy for PDF Librarian
 
-Last updated: 2026-03-08
+Last updated: 2026-10-24
 
 ## English
 

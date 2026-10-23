@@ -14,20 +14,33 @@ targets:
       - Sources/PDFLibrarian
     resources:
       - Sources/PDFLibrarian/Assets.xcassets
+    postBuildScripts:
+      - name: Bundle ExifTool
+        script: /bin/bash "$SRCROOT/scripts/bundle_exiftool.sh" "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH"
+        basedOnDependencyAnalysis: false
+        inputFiles:
+          - $(SRCROOT)/scripts/bundle_exiftool.sh
+          - $(SRCROOT)/vendor/exiftool/Image-ExifTool-13.59.tar.gz
+          - $(SRCROOT)/vendor/exiftool/ARTISTIC.txt
+          - $(SRCROOT)/vendor/exiftool/NOTICE.txt
+        outputFileLists:
+          - $(SRCROOT)/vendor/exiftool/BundleOutputs.xcfilelist
     settings:
       base:
         PRODUCT_NAME: "PDF Librarian"
         INFOPLIST_KEY_CFBundleDisplayName: "PDF Librarian"
         INFOPLIST_KEY_LSMinimumSystemVersion: "13.0"
         CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 2S7X36GQC9
         CODE_SIGN_ENTITLEMENTS: Sources/PDFLibrarian/PDFLibrarian.entitlements
     info:
       path: Sources/PDFLibrarian/Info.plist
       properties:
         CFBundleName: "PDF Librarian"
         CFBundleDisplayName: "PDF Librarian"
-        CFBundleShortVersionString: 1.0.0
-        CFBundleVersion: 1.0.0
+        CFBundleShortVersionString: 1.5.0
+        CFBundleVersion: "2"
+        CFBundleLocalizations: [en, zh-Hans]
         LSApplicationCategoryType: public.app-category.productivity
         ITSAppUsesNonExemptEncryption: false
         NSHighResolutionCapable: true
