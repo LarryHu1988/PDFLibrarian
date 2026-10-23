@@ -4,7 +4,7 @@
 <p align="center">让每份 PDF，都有清楚的来处。<br>A proper place for every PDF.</p>
 <p align="center"><a href="https://larryhu.com/PDFLibrarian/">主页 / Website</a> · <a href="https://apps.apple.com/app/id6760351540">Mac App Store</a> · <a href="https://github.com/LarryHu1988/PDFLibrarian/releases/latest">Releases</a> · <a href="https://larryhu.com/PDFLibrarian/support/">Support</a></p>
 
-![PDF Librarian 简体中文工作区](docs/assets/zh-edit.webp)
+![PDF Librarian 商店推广图](docs/app-store/1.5.0/screenshots/zh-Hans/01.png)
 
 PDF Librarian 是一款原生 macOS PDF 书目整理工具。围绕四步流程，在三栏工作区中导入 PDF、检索候选书目、核对并写入元数据，再以清晰的文件名保存。
 
@@ -19,13 +19,13 @@ PDF Librarian 是一款原生 macOS PDF 书目整理工具。围绕四步流程�
 
 PDF 保留在本机。主动联网检索时，应用向所选公开来源发送书目查询线索，不上传完整 PDF。无需账户，无广告、跟踪或分析 SDK。公开来源的完整度和可用性可能不同。写入会替换元数据，确认框会列出变化；重要资料建议先保留副本。
 
-需要 macOS 13 或以上版本，支持 Apple 芯片和 Intel Mac。请通过 Mac App Store 安装正式分发版；GitHub 发布页说明每项附件的用途和签名状态。
+需要 macOS 13 或以上版本，支持 Apple 芯片和 Intel Mac。可在 [GitHub 1.5.0 发布页](https://github.com/LarryHu1988/PDFLibrarian/releases/tag/V1.5.0)下载已通过 Apple 公证的直装 ZIP。Mac App Store 的 1.5.0（构建 2）已准备至 Connect，尚未提交审核。
 
 ### English
 
 PDF Librarian is a native macOS workspace for organizing the metadata and filenames of book and research PDFs.
 
-![PDF Librarian English workspace](docs/assets/en-edit.webp)
+![PDF Librarian App Store promotional image](docs/app-store/1.5.0/screenshots/en-US/01.png)
 
 | Workflow | What you can do |
 | --- | --- |
@@ -38,7 +38,7 @@ A fixed workflow sidebar and adjustable content/detail panes keep context in vie
 
 Your PDFs stay on your Mac. Requested online searches send bibliographic clues to the selected public sources, not entire PDFs. No account, ads, tracking, or analytics SDKs. Public catalogs vary in coverage and availability. Metadata is replaced only after confirmation; keep copies of important documents.
 
-Requires macOS 13 or later. Universal builds support Apple silicon and Intel Macs. Install the distribution build from the Mac App Store; release notes identify the purpose and signing status of GitHub attachments.
+Requires macOS 13 or later. Universal builds support Apple silicon and Intel Macs. Download the Apple-notarized direct-install ZIP from the [GitHub 1.5.0 release](https://github.com/LarryHu1988/PDFLibrarian/releases/tag/V1.5.0). Mac App Store version 1.5.0 (build 2) is prepared in Connect and has not been submitted for review.
 
 ### Development
 

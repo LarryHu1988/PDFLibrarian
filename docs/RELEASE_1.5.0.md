@@ -28,8 +28,8 @@ Universal Release archive passed. Workspace state and production-view checks pas
 
 ## Media
 
-Six 2880×1800 screenshots per locale, two 29-second 1920×1080 previews, bilingual promotional images, and updated website images. All product imagery comes from production SwiftUI views using demo bibliographic data. Video camera edits are authored in HyperFrames; no book contents are included.
+Six commercial 2880×1800 App Store images per locale, two 29-second 1920×1080 previews, bilingual promotional images, and updated website images. Store compositions combine large benefit-led headlines, understated backgrounds and real UI details. All product imagery comes from production SwiftUI views using demo bibliographic data. The write-confirmation demonstration compares metadata read from an owned demo PDF with proposed changes. Video camera edits are authored in HyperFrames; no book contents are included.
 
 ## Installation
 
-The App Store installer is intended for upload to Connect. GitHub direct downloads use a separate Developer ID signature and require successful notarization before publication. See GitHub release attachments for the confirmed distribution files.
+The App Store installer is intended for upload to Connect. The GitHub direct-download ZIP uses a separate Developer ID signature. Apple accepted notarization submission `47f8b83c-2a69-4050-903f-929fa7c49109`; its app has a validated stapled ticket and passes Gatekeeper as `Notarized Developer ID`. See GitHub release attachments for distribution files. This notarization is separate from App Store review.

@@ -26,6 +26,10 @@ struct ReleaseCapture {
             let context = CGContext(url as CFURL, mediaBox: &bounds, nil)!
             context.beginPDFPage(nil); context.endPDFPage(); context.closePDF()
         }
+        // Seed only the owned demonstration PDF so the review image shows real before/after values.
+        try MetadataService().writeMetadata(fileURL: fixtureFolder.appendingPathComponent("Semiconductor Power Devices_2018_en.pdf"), entries: [
+            "dc:title": "Semiconductor Power Devices", "dc:creator": "Josef Lutz", "dc:publisher": "Springer", "dc:date": "2018", "dc:language": "en"
+        ])
         let defaults = UserDefaults.standard
         let keys = ["app.appearance.mode", "app.language.code"]
         let saved = keys.map { defaults.object(forKey: $0) }

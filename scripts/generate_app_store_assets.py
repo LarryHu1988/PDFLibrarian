@@ -14,7 +14,6 @@ for locale, (title, subtitle) in COPY.items():
     prefix = "en" if locale == "en-US" else "zh"
     for index, name in [(1,"overview"),(2,"search"),(3,"edit"),(4,"rename"),(5,"warm"),(6,"dark")]:
         source = CAPTURES / locale / f"{index:02d}.png"
-        shutil.copy2(source, screenshots / source.name)
         Image.open(source).convert("RGB").resize((1600,1000)).save(ROOT / "docs" / "assets" / f"{prefix}-{name}.webp", quality=92, method=6)
     result = Image.new("RGB", (2400,1760), "#edf3f8")
     draw = ImageDraw.Draw(result)
@@ -43,3 +42,7 @@ for locale in COPY:
     card.paste(preview,(498,140));card.save(ROOT/'docs/assets'/f'social-{locale}.jpg',quality=94)
     card.save(OUT/'promotional'/f'{locale}-social.jpg',quality=94)
 shutil.copy2(ROOT/'docs/assets/social-en-US.jpg',ROOT/'docs/assets/social.jpg')
+
+# Store slots use the commercial designs; raw view captures remain production sources.
+import subprocess, sys
+subprocess.run([sys.executable,str(ROOT/'scripts/generate_store_commercial.py'),'--install'],check=True)

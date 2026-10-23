@@ -1,0 +1,266 @@
+[
+  {
+    "locale": "zh-Hans",
+    "file": "screenshots/zh-Hans/01.png",
+    "headline": "让 PDF，井然有序。",
+    "body": "查找书目、核对元数据、规范命名，在一处完成。",
+    "native_regions": [
+      [
+        390,
+        423,
+        2100,
+        1312
+      ]
+    ],
+    "size": [
+      2880,
+      1800
+    ],
+    "source": "Production SwiftUI native view captures; demo data; original UI preserved",
+    "alpha": false
+  },
+  {
+    "locale": "zh-Hans",
+    "file": "screenshots/zh-Hans/02.png",
+    "headline": "成批导入，\n逐本整理。",
+    "body": "多选 PDF 或文件夹。\n每份文件的进度，都在侧栏。",
+    "native_regions": [
+      [
+        1545,
+        205,
+        1140,
+        1377
+      ]
+    ],
+    "size": [
+      2880,
+      1800
+    ],
+    "source": "Production SwiftUI native view captures; demo data; original UI preserved",
+    "alpha": false
+  },
+  {
+    "locale": "zh-Hans",
+    "file": "screenshots/zh-Hans/03.png",
+    "headline": "比较来源，\n再做选择。",
+    "body": "从公开书目中寻找线索。\n核对作者、ISBN 与出版信息。",
+    "native_regions": [
+      [
+        1225,
+        210,
+        1500,
+        1472
+      ]
+    ],
+    "size": [
+      2880,
+      1800
+    ],
+    "source": "Production SwiftUI native view captures; demo data; original UI preserved",
+    "alpha": false
+  },
+  {
+    "locale": "zh-Hans",
+    "file": "screenshots/zh-Hans/04.png",
+    "headline": "写入之前，\n变化先看清。",
+    "body": "当前文件值，对比拟写入值。\n修改与清空，逐项确认。",
+    "native_regions": [
+      [
+        1150,
+        315,
+        1550,
+        1198
+      ]
+    ],
+    "size": [
+      2880,
+      1800
+    ],
+    "source": "Production SwiftUI native view captures; demo data; original UI preserved",
+    "alpha": false
+  },
+  {
+    "locale": "zh-Hans",
+    "file": "screenshots/zh-Hans/05.png",
+    "headline": "五项信息，\n命名一目了然。",
+    "body": "标题、作者、出版社，\n年份与语言，\n一路分色，清楚对应。",
+    "native_regions": [
+      [
+        1160,
+        200,
+        1550,
+        1521
+      ]
+    ],
+    "size": [
+      2880,
+      1800
+    ],
+    "source": "Production SwiftUI native view captures; demo data; original UI preserved",
+    "alpha": false
+  },
+  {
+    "locale": "zh-Hans",
+    "file": "screenshots/zh-Hans/06.png",
+    "headline": "三种主题，\n一种清晰。",
+    "body": "蓝白、暖绿与深色。\n简体中文与英文，随时切换。",
+    "native_regions": [
+      [
+        150,
+        855,
+        1330,
+        831
+      ],
+      [
+        790,
+        695,
+        1430,
+        894
+      ],
+      [
+        1310,
+        835,
+        1440,
+        900
+      ]
+    ],
+    "size": [
+      2880,
+      1800
+    ],
+    "source": "Production SwiftUI native view captures; demo data; original UI preserved",
+    "alpha": false
+  },
+  {
+    "locale": "en-US",
+    "file": "screenshots/en-US/01.png",
+    "headline": "A clearer home for every PDF.",
+    "body": "Find bibliographic records. Review changes. Save with a clear name.",
+    "native_regions": [
+      [
+        390,
+        423,
+        2100,
+        1312
+      ]
+    ],
+    "size": [
+      2880,
+      1800
+    ],
+    "source": "Production SwiftUI native view captures; demo data; original UI preserved",
+    "alpha": false
+  },
+  {
+    "locale": "en-US",
+    "file": "screenshots/en-US/02.png",
+    "headline": "Import more.\nKeep your place.",
+    "body": "Select multiple PDFs or folders.\nResume each file from the sidebar.",
+    "native_regions": [
+      [
+        1545,
+        205,
+        1140,
+        1377
+      ]
+    ],
+    "size": [
+      2880,
+      1800
+    ],
+    "source": "Production SwiftUI native view captures; demo data; original UI preserved",
+    "alpha": false
+  },
+  {
+    "locale": "en-US",
+    "file": "screenshots/en-US/03.png",
+    "headline": "Compare first.\nChoose with care.",
+    "body": "Review public catalog records.\nCompare authors, ISBNs and sources.",
+    "native_regions": [
+      [
+        1225,
+        210,
+        1500,
+        1472
+      ]
+    ],
+    "size": [
+      2880,
+      1800
+    ],
+    "source": "Production SwiftUI native view captures; demo data; original UI preserved",
+    "alpha": false
+  },
+  {
+    "locale": "en-US",
+    "file": "screenshots/en-US/04.png",
+    "headline": "See every change.\nBefore you write.",
+    "body": "Current PDF values beside proposed values.\nReview changed and cleared fields.",
+    "native_regions": [
+      [
+        1150,
+        315,
+        1550,
+        1198
+      ]
+    ],
+    "size": [
+      2880,
+      1800
+    ],
+    "source": "Production SwiftUI native view captures; demo data; original UI preserved",
+    "alpha": false
+  },
+  {
+    "locale": "en-US",
+    "file": "screenshots/en-US/05.png",
+    "headline": "Five fields.\nOne clear name.",
+    "body": "Title, authors and publisher.\nYear and language.\nFollow matching colors into the filename.",
+    "native_regions": [
+      [
+        1160,
+        200,
+        1550,
+        1521
+      ]
+    ],
+    "size": [
+      2880,
+      1800
+    ],
+    "source": "Production SwiftUI native view captures; demo data; original UI preserved",
+    "alpha": false
+  },
+  {
+    "locale": "en-US",
+    "file": "screenshots/en-US/06.png",
+    "headline": "Three themes.\nYour kind of calm.",
+    "body": "Blue, warm sage or dark.\nSimplified Chinese and English.",
+    "native_regions": [
+      [
+        150,
+        855,
+        1330,
+        831
+      ],
+      [
+        790,
+        695,
+        1430,
+        894
+      ],
+      [
+        1310,
+        835,
+        1440,
+        900
+      ]
+    ],
+    "size": [
+      2880,
+      1800
+    ],
+    "source": "Production SwiftUI native view captures; demo data; original UI preserved",
+    "alpha": false
+  }
+]
