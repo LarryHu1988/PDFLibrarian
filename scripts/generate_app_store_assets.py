@@ -41,4 +41,5 @@ for locale in COPY:
     draw.text((54,405),small,fill='#53677d',font=ImageFont.truetype(FONTS[locale],19))
     preview=Image.open(CAPTURES/locale/'03.png').convert('RGB').resize((648,405))
     card.paste(preview,(498,140));card.save(ROOT/'docs/assets'/f'social-{locale}.jpg',quality=94)
+    card.save(OUT/'promotional'/f'{locale}-social.jpg',quality=94)
 shutil.copy2(ROOT/'docs/assets/social-en-US.jpg',ROOT/'docs/assets/social.jpg')
