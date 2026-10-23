@@ -30,3 +30,15 @@ for locale, (title, subtitle) in COPY.items():
     result.resize((1200,880)).save(ROOT / "docs/assets" / f"social-{locale}.jpg",quality=92)
 shutil.copy2(ROOT / "docs/assets/social-en-US.jpg", ROOT / "docs/assets/social.jpg")
 print("Prepared 12 screenshots, 12 website views, and bilingual promotional/social images")
+# Open Graph cards use the standard 1200x630 canvas, separate from the full-size posters.
+for locale in COPY:
+    card=Image.new('RGB',(1200,630),'#edf3f8');draw=ImageDraw.Draw(card)
+    icon=Image.open(ROOT/'docs/assets/icon.png').convert('RGBA');icon.thumbnail((48,48));card.paste(icon,(54,46),icon)
+    draw.text((120,53),'PDF Librarian',fill='#233348',font=ImageFont.truetype('/System/Library/Fonts/Avenir Next.ttc',25))
+    lines=['让每份 PDF，','都有清楚的来处。'] if locale=='zh-Hans' else ['A proper place','for every PDF.']
+    for i,line in enumerate(lines):draw.text((54,225+i*64),line,fill='#172b43',font=ImageFont.truetype(FONTS[locale],42))
+    small='PDF 书目整理与元数据管理' if locale=='zh-Hans' else 'PDF metadata, clearly organized.'
+    draw.text((54,405),small,fill='#53677d',font=ImageFont.truetype(FONTS[locale],19))
+    preview=Image.open(CAPTURES/locale/'03.png').convert('RGB').resize((648,405))
+    card.paste(preview,(498,140));card.save(ROOT/'docs/assets'/f'social-{locale}.jpg',quality=94)
+shutil.copy2(ROOT/'docs/assets/social-en-US.jpg',ROOT/'docs/assets/social.jpg')
