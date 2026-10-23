@@ -18,3 +18,5 @@ videos/**/renders/
 
 __pycache__/
 *.pyc
+
+**/.thumbnails/
