@@ -18,12 +18,12 @@
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     document.querySelectorAll('[data-zh]').forEach(node => { node.textContent = node.dataset[lang]; });
     document.querySelectorAll('[data-image]').forEach(node => {
-      const next = `assets/${lang}-${node.dataset.image}.webp`;
+      const next = `assets/${lang}-${node.dataset.image}.webp?v=native-lossless`;
       if (node.getAttribute('src') !== next) node.src = next;
       if (node.dataset.altZh) node.alt = lang === 'zh' ? node.dataset.altZh : node.dataset.altEn;
     });
     const video = document.querySelector('#app-preview');
-    if(video && video.dataset.locale !== lang){video.dataset.locale=lang;video.poster=`assets/${lang}-overview.webp`;video.querySelector('source').src=`assets/${lang}-preview.mp4`;video.load();}
+    if(video && video.dataset.locale !== lang){video.dataset.locale=lang;video.poster=`assets/${lang}-overview.webp?v=native-lossless`;video.querySelector('source').src=`assets/${lang}-preview.mp4`;video.load();}
     const preview = document.querySelector('#preview-image');
     const selected = document.querySelector('[data-preview][aria-pressed="true"]');
     const label = captions[selected.dataset.preview][lang === 'zh' ? 0 : 1];

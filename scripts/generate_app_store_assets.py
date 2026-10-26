@@ -14,7 +14,12 @@ for locale, (title, subtitle) in COPY.items():
     prefix = "en" if locale == "en-US" else "zh"
     for index, name in [(1,"overview"),(2,"search"),(3,"edit"),(4,"rename"),(5,"warm"),(6,"dark")]:
         source = CAPTURES / locale / f"{index:02d}.png"
-        Image.open(source).convert("RGB").resize((1600,1000)).save(ROOT / "docs" / "assets" / f"{prefix}-{name}.webp", quality=92, method=6)
+        with Image.open(source) as capture:
+            capture.convert("RGB").save(
+                ROOT / "docs" / "assets" / f"{prefix}-{name}.webp",
+                lossless=True, exact=True, method=6,
+                **({"icc_profile": capture.info["icc_profile"]} if capture.info.get("icc_profile") else {}),
+            )
     result = Image.new("RGB", (2400,1760), "#edf3f8")
     draw = ImageDraw.Draw(result)
     icon = Image.open(ROOT / "docs/assets/icon.png").convert("RGBA")
