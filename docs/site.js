@@ -1,5 +1,7 @@
+import { loadProgressiveImage, previewFor } from "./scripts/progressive-images.js?v=clear-1";
 (() => {
   'use strict';
+  const imagePreviews = JSON.parse(document.getElementById('image-previews')?.textContent || '{}');
   const revealed = new WeakSet();
   const observer = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -14,7 +16,7 @@
     node.decoding = 'async';
     if (node.loading !== 'lazy' || revealed.has(node) || !observer) {
       node.loading = 'eager';
-      if (node.getAttribute('src') !== source) node.src = source;
+      loadProgressiveImage(node, source, previewFor(source, imagePreviews), { priority: node.fetchPriority });
     } else observer.observe(node);
   }
   const pdf = document.title.startsWith('PDF Librarian');
@@ -53,6 +55,7 @@
   }
   const toggle = document.querySelector('.language');
   function render() {
+    document.querySelectorAll('img[data-icon-progressive]').forEach(node => setImage(node, node.dataset.source));
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     document.querySelectorAll('[data-zh]').forEach(node => { node.textContent = node.dataset[lang]; });
     document.querySelectorAll('[data-image]').forEach(node => {
