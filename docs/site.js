@@ -1,4 +1,4 @@
-import { loadDisplayImage } from "./scripts/progressive-images.js?v=display-2";
+import { loadDisplayImage } from "./scripts/progressive-images.js?v=display-3";
 (() => {
   'use strict';
   const imagePreviews = JSON.parse(document.getElementById('image-previews')?.textContent || '{}');

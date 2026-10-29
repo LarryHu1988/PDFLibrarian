@@ -23,7 +23,7 @@ function pump() {
     const image = new Image();
     job.image = image;
     image.decoding = 'async';
-    image.fetchPriority = 'low';
+    image.fetchPriority = rank(job) === 0 ? 'high' : 'low';
     image.src = job.source;
     image.decode().then(() => {
       ready.add(job.source);
@@ -162,7 +162,7 @@ export function loadProgressiveImage(node, source, preview, options = {}) {
 export function responsiveFor(source, manifest = {}, sizes = 'auto, 100vw') {
   const item = manifest[source.split('?')[0]];
   if (!item?.variants?.length) return { src: previewFor(source, manifest) };
-  return { src: item.variants[0].src, srcSet: item.variants.map(v => `${v.src} ${v.width}w`).join(', '), sizes };
+  return { src: item.src, srcSet: item.variants.map(v => `${v.src} ${v.width}w`).join(', '), sizes };
 }
 
 export function displayWidth(node, nativeWidth, nativeHeight, density = (window.devicePixelRatio || 1) * (window.visualViewport?.scale || 1)) {
@@ -189,9 +189,11 @@ function refreshDisplays() {
 }
 
 function watchDensity() {
-  densityQuery?.removeEventListener('change', changedDensity);
+  if (densityQuery?.removeEventListener) densityQuery.removeEventListener('change', changedDensity);
+  else densityQuery?.removeListener?.(changedDensity);
   densityQuery = window.matchMedia(`(resolution: ${window.devicePixelRatio || 1}dppx)`);
-  densityQuery.addEventListener('change', changedDensity);
+  if (densityQuery.addEventListener) densityQuery.addEventListener('change', changedDensity);
+  else densityQuery.addListener?.(changedDensity);
 }
 
 function changedDensity() { watchDensity(); refreshDisplays(); }
@@ -224,7 +226,8 @@ export function loadDisplayImage(node, source, manifest = {}, options = {}) {
   states.get(node)?.dispose();
   const item = manifest[source.split('?')[0]];
   if (!item?.variants?.length) return loadProgressiveImage(node, source, previewFor(source, manifest), options);
-  const state = { source, visible: typeof IntersectionObserver === 'undefined', request: () => {}, dispose: () => {} };
+  // Callers already use viewport-based loading; a second observer can reject clipped mockups.
+  const state = { source, visible: true, request: () => {}, dispose: () => {} };
   states.set(node, state);
   node.dataset.originalSrc = source;
   node.dataset.imageMode = 'display';
@@ -302,17 +305,6 @@ export function loadDisplayImage(node, source, manifest = {}, options = {}) {
   }
   displays.add(state);
   displayResize?.observe(node);
-  if (typeof IntersectionObserver !== 'undefined') {
-    visibility ||= new IntersectionObserver(entries => {
-      for (const entry of entries) {
-        const active = states.get(entry.target);
-        if (!active) continue;
-        active.visible = entry.isIntersecting;
-        if (active.visible && active.previewReady !== false && entry.target.dataset.imageStage !== 'full') active.request();
-      }
-    }, { rootMargin: '120px' });
-    visibility.observe(node);
-  }
   const removeView = options.zoom && item.nativeWidth !== item.nativeHeight ? originalView(node, source) : () => {};
   window.addEventListener('online', request);
   state.dispose = () => {
