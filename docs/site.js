@@ -1,4 +1,4 @@
-import { loadProgressiveImage, previewFor } from "./scripts/progressive-images.js?v=clear-1";
+import { loadDisplayImage } from "./scripts/progressive-images.js?v=display-2";
 (() => {
   'use strict';
   const imagePreviews = JSON.parse(document.getElementById('image-previews')?.textContent || '{}');
@@ -16,7 +16,7 @@ import { loadProgressiveImage, previewFor } from "./scripts/progressive-images.j
     node.decoding = 'async';
     if (node.loading !== 'lazy' || revealed.has(node) || !observer) {
       node.loading = 'eager';
-      loadProgressiveImage(node, source, previewFor(source, imagePreviews), { priority: node.fetchPriority });
+      loadDisplayImage(node, source, imagePreviews, { priority: node.fetchPriority, zoom: true });
     } else observer.observe(node);
   }
   const pdf = document.title.startsWith('PDF Librarian');
@@ -36,7 +36,9 @@ import { loadProgressiveImage, previewFor } from "./scripts/progressive-images.j
   function renderVideo() {
     if (!video || !videoVisible || video.dataset.locale === lang) return;
     video.dataset.locale = lang;
-    video.poster = `assets/${lang}-overview.webp?v=native-lossless`;
+    const poster = imagePreviews[`assets/${lang}-overview.webp`];
+    const required = Math.ceil(video.clientWidth * (window.devicePixelRatio || 1));
+    video.poster = poster?.variants.find(item => item.width >= required)?.src || poster?.src || `assets/${lang}-overview.webp?v=native-lossless`;
     video.querySelector('source').src = `assets/${lang}-preview.mp4`;
     video.preload = 'metadata';
     video.load();
