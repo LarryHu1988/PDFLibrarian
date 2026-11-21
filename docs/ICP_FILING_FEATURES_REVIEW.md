@@ -1,4 +1,4 @@
-# PDF Librarian 1.5.0：备案特征核对资料
+# PDF Librarian - 书目匠 1.5.0：备案特征核对资料
 
 从本次 **Mac App Store 签名包 1.5.0（构建 2）** 中的应用实际提取证书并重新计算。GitHub 下载版采用另一张 Developer ID 证书；下面参数对应商店包。
 

@@ -1,10 +1,10 @@
-# Privacy Policy for PDF Librarian
+# Privacy Policy for PDF Librarian - 书目匠
 
 Last updated: 2026-10-24
 
 ## English
 
-PDF Librarian is a macOS app that helps users organize book and academic paper PDFs.
+The app runs on macOS and helps users organize book and academic paper PDFs.
 
 ### Data we access
 
@@ -30,11 +30,11 @@ These requests are initiated only when the user performs a metadata search.
 
 ### Data collection
 
-PDF Librarian does not require a user account.
+The app does not require a user account.
 
-PDF Librarian does not use advertising SDKs, tracking SDKs, or third-party analytics SDKs.
+The app does not use advertising SDKs, tracking SDKs, or third-party analytics SDKs.
 
-PDF Librarian does not intentionally collect personal profile data such as name, email address, phone number, precise location, contacts, or payment information.
+The app does not intentionally collect personal profile data such as name, email address, phone number, precise location, contacts, or payment information.
 
 ### Local file processing
 
@@ -42,11 +42,11 @@ Metadata writing and file renaming are performed on the user-selected files. The
 
 ### Contact
 
-For privacy questions, contact the developer through the support page for PDF Librarian.
+For privacy questions, contact the developer through the [support page](https://larryhu.com/PDFLibrarian/support/).
 
 ## 简体中文
 
-PDF Librarian 是一款用于整理书籍和学术文献 PDF 的 macOS 应用。
+书目匠是一款用于整理书籍和学术文献 PDF 的 macOS 应用。
 
 ### 我们会访问哪些数据
 
@@ -72,11 +72,11 @@ PDF Librarian 是一款用于整理书籍和学术文献 PDF 的 macOS 应用。
 
 ### 数据收集说明
 
-PDF Librarian 不要求用户注册或登录。
+书目匠不要求用户注册或登录。
 
-PDF Librarian 不使用广告 SDK、跟踪 SDK 或第三方分析 SDK。
+书目匠不使用广告 SDK、跟踪 SDK 或第三方分析 SDK。
 
-PDF Librarian 不会主动收集姓名、邮箱、手机号、精确位置、通讯录或支付信息等个人资料。
+书目匠不会主动收集姓名、邮箱、手机号、精确位置、通讯录或支付信息等个人资料。
 
 ### 本地文件处理
 
@@ -84,4 +84,4 @@ PDF Librarian 不会主动收集姓名、邮箱、手机号、精确位置、通
 
 ### 联系方式
 
-如有隐私相关问题，请通过 PDF Librarian 的支持页面联系开发者。
+如有隐私相关问题，请通过[书目匠的支持页面](https://larryhu.com/PDFLibrarian/support/)联系开发者。

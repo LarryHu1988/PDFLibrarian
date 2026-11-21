@@ -1,4 +1,4 @@
-# PDF Librarian workspace
+# PDF Librarian - 书目匠 workspace
 
 The fixed 244-point sidebar centers the app icon/name, keeps four aligned workflow names, and lists selected files with resumable progress. Simplified Chinese/English flag controls sit above three theme swatches.
 

@@ -74,7 +74,7 @@ import { loadDisplayImage } from "./scripts/progressive-images.js?v=display-3";
     if (caption) caption.textContent = label;
     toggle.textContent = lang === 'zh' ? 'EN' : '中文';
     toggle.setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : '切换到中文');
-    document.title = pdf ? (lang === 'zh' ? 'PDF Librarian - 书目匠 · 让每份 PDF，都有清楚的来处。' : 'PDF Librarian · A proper place for every PDF.') : (lang === 'zh' ? 'KeepFit · 管住嘴，迈开腿。' : 'KeepFit · Eat well. Move more.');
+    document.title = pdf ? (lang === 'zh' ? 'PDF Librarian - 书目匠 · 让每份 PDF，都有清楚的来处。' : 'PDF Librarian - 书目匠 · A proper place for every PDF.') : (lang === 'zh' ? 'KeepFit · 管住嘴，迈开腿。' : 'KeepFit · Eat well. Move more.');
   }
   toggle.addEventListener('click', () => {
     lang = lang === 'zh' ? 'en' : 'zh';

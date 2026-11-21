@@ -1,6 +1,6 @@
 # App Review notes — 1.5.0
 
-PDF Librarian 1.5.0 is a native sandboxed macOS PDF metadata and filename organizer. No sign-in, payment, demo account, or external ExifTool installation is required.
+PDF Librarian - 书目匠 1.5.0 is a native sandboxed macOS PDF metadata and filename organizer. No sign-in, payment, demo account, or external ExifTool installation is required.
 
 Review workflow:
 1. Import PDFs: click the import button and select one or more PDFs or a folder using NSOpenPanel.

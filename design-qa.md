@@ -1,4 +1,4 @@
-# PDF Librarian 1.5.0 design QA
+# PDF Librarian - 书目匠 1.5.0 design QA
 
 Production workspace and metadata tests passed on 2026-10-24. Chinese and English release captures cover all four steps and all three themes at 1440×900 points (2880×1800 pixels). Minimum-size layout, sidebar progress, native split resizing, frozen write previews, changed/clear rows, filename colors, and actual confirmation-sheet presentation are covered by the workspace test harness.
 

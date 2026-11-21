@@ -1,8 +1,8 @@
-# PDF Librarian Support
+# PDF Librarian - 书目匠 Support
 
 ## English
 
-If you need help with PDF Librarian, please include the following information when contacting support:
+If you need help with the app, please include the following information when contacting support:
 
 - macOS version
 - app version
@@ -20,7 +20,7 @@ Suggested support topics:
 
 ## 简体中文
 
-如果你需要获取 PDF Librarian 的支持，请尽量提供以下信息：
+如果你需要获取书目匠的支持，请尽量提供以下信息：
 
 - macOS 版本
 - 应用版本号

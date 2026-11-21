@@ -4,7 +4,7 @@
 <p align="center">让每份 PDF，都有清楚的来处。<br>A proper place for every PDF.</p>
 <p align="center"><a href="https://larryhu.com/PDFLibrarian/">主页 / Website</a> · <a href="https://apps.apple.com/cn/app/id6760351540?mt=12">Mac App Store</a> · <a href="https://github.com/LarryHu1988/PDFLibrarian/releases/latest">Releases</a> · <a href="https://larryhu.com/PDFLibrarian/support/">Support</a></p>
 
-![书目匠商店推广图](docs/app-store/1.5.0/screenshots/zh-Hans/01.png)
+![书目匠商店推广图](docs/assets/readme-workspace-zh-Hans.png)
 
 书目匠是一款原生 macOS PDF 书目整理工具。围绕四步流程，在三栏工作区中导入 PDF、检索候选书目、核对并写入元数据，再以清晰的文件名保存。
 
@@ -25,7 +25,7 @@ PDF 保留在本机。主动联网检索时，应用向所选公开来源发送�
 
 PDF Librarian - 书目匠 is a native macOS workspace for organizing the metadata and filenames of book and research PDFs.
 
-![PDF Librarian App Store promotional image](docs/app-store/1.5.0/screenshots/en-US/01.png)
+![PDF Librarian - 书目匠 App Store promotional image](docs/assets/readme-workspace-en-US.png)
 
 | Workflow | What you can do |
 | --- | --- |
