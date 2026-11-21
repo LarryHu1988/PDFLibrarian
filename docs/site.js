@@ -38,7 +38,7 @@ import { loadDisplayImage } from "./scripts/progressive-images.js?v=display-3";
     video.dataset.locale = lang;
     const poster = imagePreviews[`assets/${lang}-overview.webp`];
     const required = Math.ceil(video.clientWidth * (window.devicePixelRatio || 1));
-    video.poster = poster?.variants.find(item => item.width >= required)?.src || poster?.src || `assets/${lang}-overview.webp?v=native-lossless`;
+    video.poster = poster?.variants.find(item => item.width >= required)?.src || poster?.src || `assets/${lang}-overview.webp?v=book-title`;
     video.querySelector('source').src = `assets/${lang}-preview.mp4`;
     video.preload = 'metadata';
     video.load();
@@ -61,7 +61,7 @@ import { loadDisplayImage } from "./scripts/progressive-images.js?v=display-3";
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     document.querySelectorAll('[data-zh]').forEach(node => { node.textContent = node.dataset[lang]; });
     document.querySelectorAll('[data-image]').forEach(node => {
-      const next = `assets/${lang}-${node.dataset.image}.webp?v=native-lossless`;
+      const next = `assets/${lang}-${node.dataset.image}.webp?v=book-title`;
       setImage(node, next);
       if (node.dataset.altZh) node.alt = lang === 'zh' ? node.dataset.altZh : node.dataset.altEn;
     });
