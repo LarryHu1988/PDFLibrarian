@@ -1,4 +1,4 @@
-# PDF Librarian 1.5.0
+# PDF Librarian - 书目匠 1.5.0
 
 Version: **1.5.0** · Build: **2** · macOS 13+ · Universal (Apple silicon and Intel)
 
@@ -23,7 +23,7 @@ Universal Release archive passed. Workspace state and production-view checks pas
 - Version resource: e58ecb55-b032-4479-8e0c-f3f971d4ff2c.
 - Build 2 resource: 31c5619c-64d6-4c39-826f-c8a1c64c0cdc, processing VALID.
 - Build 0 was rejected by Apple error 90061 because macOS build numbers must exceed prior uploads. Build 2 was selected by the owner.
-- China mainland ICP filing number is intentionally reserved for the owner. This preparation does not claim App Review approval or public availability of 1.5.0.
+- Version 1.5.0 is available on the [Mac App Store](https://apps.apple.com/cn/app/id6760351540?mt=12).
 - The owner selected local-only legacy cleanup. GitHub V1.0.0 release/assets/tag remain.
 
 ## Media
@@ -32,4 +32,4 @@ Six commercial 2880×1800 App Store images per locale, two 29-second 1920×1080 
 
 ## Installation
 
-The App Store installer is intended for upload to Connect. The GitHub direct-download ZIP uses a separate Developer ID signature. Apple accepted notarization submission `47f8b83c-2a69-4050-903f-929fa7c49109`; its app has a validated stapled ticket and passes Gatekeeper as `Notarized Developer ID`. See GitHub release attachments for distribution files. This notarization is separate from App Store review.
+For direct installation, download the GitHub release ZIP signed with Developer ID. Apple accepted notarization submission `47f8b83c-2a69-4050-903f-929fa7c49109`; its app has a validated stapled ticket and passes Gatekeeper as `Notarized Developer ID`. See GitHub release attachments for distribution files. This notarization is separate from App Store review.
